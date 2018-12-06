@@ -23,27 +23,15 @@ class Auth extends CI_Controller
     else {
       //membuat session dengan nama userdata
       $userData = array(
-        'username' => $query->id_user,
-        'status' => $query->status,
+        'username' => $query->username,
+        'level' => $query->level,
         'logged_in' => TRUE
       );
       $this->session->set_userdata($userData);
       return TRUE;
     }
   }
-  public function cekNIM()
-  {
-      $this->load->model('model_mahasiswa');
-      $NIM = $this->input->post('NIM');
-      $query = $this->model_mahasiswa->cekNIM($NIM);
-      //CEk apakah nim sudah digunakan
-      if($query === 1){
-        return "NIM sudah didaftarkan, tidak bisa didaftarkan kembali";
-      }
-      else {
-        return FALSE;
-      }
-  }
+  
 
   public function login()
   {
