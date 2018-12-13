@@ -109,7 +109,7 @@ CREATE TABLE `tb_penghuni` (
 --
 
 CREATE TABLE `tb_tagihan` (
-  `id_tagihan` int(11) NOT NULL,
+  `id_tagihan` int(11) NOT NULL ,
   `id_kamar` int(11) NOT NULL,
   `jumlah tagihan` decimal(10,2) NOT NULL,
   `Batas` int(11) NOT NULL,
@@ -242,6 +242,16 @@ ALTER TABLE `tb_transaksi`
 ALTER TABLE `tb_user`
   MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
+ALTER TABLE `tb_kamar`
+  MODIFY `id_kamar` int(11) NOT NULL AUTO_INCREMENT;
+  
+ALTER TABLE `tb_tagihan`
+  MODIFY `id_tagihan` int(11) NOT NULL AUTO_INCREMENT;  
+  
+ALTER TABLE `tb_kredit`
+  MODIFY `id_kredit` int(11) NOT NULL AUTO_INCREMENT;  
+  
+  
 --
 -- Constraints for dumped tables
 --
