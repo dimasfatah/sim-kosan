@@ -6,6 +6,7 @@ Class Admin extends MY_Controller{
   		$this->cekLogin();
 		$this->load->database();
 		$this ->load-> model('m_admin');
+		
 		//validasi jika session dengan level manager mengakses halaman ini maka akan dialihkan ke halaman manager
     	if ($this->session->userdata('level') == "superadmin") {
       		redirect('admin/superadmin');
@@ -17,9 +18,17 @@ Class Admin extends MY_Controller{
 		$this->load->view('v_endbar');
 	}
 
-	public function beranda(){
+	public function beranda(){ 
+$data['count'] = $this->m_admin->jumlah_penghuni()->row();
+$data['isi'] = $this->m_admin->jumlah_kamarterisi()->row();
+$data['kamar'] = $this->m_admin->jumlah_kamar()->row();
+$data['Lantai'] = $this->m_admin->jumlah_berdasarkanlantai()->result();
 
-	}
+
+		$this->load->view('v_topbar');		
+		$this->load->view('v_pengeluaran',$data);
+		$this->load->view('v_endbar');   
+   }
 
 	public function data_penghuni(){
 		
@@ -40,8 +49,9 @@ Class Admin extends MY_Controller{
 
 	}
 
-
-
+	public function pengeluaran(){
+	
+	}
 
 
 }
