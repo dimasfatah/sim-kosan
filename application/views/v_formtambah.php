@@ -39,20 +39,21 @@
                                                                 </select>
                                                             </div>
                                                         </div>
-                                                        <!--<div class="col-md-3">
+                                                        <div class="col-md-3">
                                                             <div class="form-group">
-                                                                <label for="nomor_kamar" class="control-label">Nomor Kamar</label>
-                                                                <select name="nomor_kamar" class="form-control" id="nomor_kamar">
+                                                                <label for="nomor" class="control-label">Nomor Kamar</label>
+                                                                <select name="no_kamar" class="form-control" id="no_kamar">
                                                                     <option >Nomor</option>
                                                                 </select>
                                                             </div>
-                                                        </div> -->
+                                                        </div>
+                                                        <!--
                                                         <div class="col-md-3">
                                                             <div class="form-group">
                                                                 <label for="nomor" class="control-label">Nomor Kamar</label>
                                                                 <input data-parsley-type="number" type="text" class="form-control" id="no_kamar" placeholder="No Kamar" name="no_kamar" required>
                                                             </div>
-                                                        </div> 
+                                                        </div> -->
                                                         <div class="col-md-5">
                                                             <div class="form-group">
                                                                 <label for="plat" class="control-label">Plat Nomor</label>
