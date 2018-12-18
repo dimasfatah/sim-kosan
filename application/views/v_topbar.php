@@ -36,7 +36,7 @@
 
                 <!-- LOGO -->
                 <div class="topbar-left">
-                    <a href="index.html" class="logo">
+                    <a href="<?php echo base_url('admin/admin/index') ?>" class="logo">
                                 <span>
                                     <img src="<?php echo base_url('assets/images/logo.png')?>" alt="" height="25">
                                 </span>
@@ -100,7 +100,7 @@
                             
 
                             <li>
-                                <a href="<?php echo base_url('admin/admin/beranda') ?>"><i class="fi-air-play"></i> <span> Beranda </span></a>
+                                <a href="<?php echo base_url('admin/admin/index') ?>"><i class="fi-air-play"></i> <span> Beranda </span></a>
                             </li>
 
                             <li>
@@ -115,38 +115,23 @@
                             <li>
                                 <a href="javascript: void(0);"><i class="fi-layers"></i><span>Data Transaksi</span><span class="menu-arrow"></span></a>
                                 <ul class="nav-second-level" aria-expanded="false">
+                                    <li><a href="<?php echo base_url('admin/admin/pembayaran') ?>"> Pembayaran </a></li>
                                     <li><a href="<?php echo base_url('admin/admin/pemasukan') ?>"> Pemasukan </a></li>
                                     <li><a href="<?php echo base_url('admin/admin/pengeluaran') ?>"> Pengeluaran</a> </li>
-
                                 </ul>
                             </li>
 
                             <li>
-                                <a href="javascript: void(0);"><i class="fi-briefcase"></i> <span> UI Kit </span> <span class="menu-arrow"></span></a>
+                                <a href="javascript: void(0);"><i class="fi-plus"></i><span>Tambah Transaksi</span><span class="menu-arrow"></span></a>
                                 <ul class="nav-second-level" aria-expanded="false">
-                                    <li><a href="ui-typography.html">Typography</a></li>
-                                    <li><a href="ui-panels.html">Panels</a></li>
-                                    <li><a href="ui-buttons.html">Buttons</a></li>
-                                    <li><a href="ui-modals.html">Modals</a></li>
-                                    <li><a href="ui-checkbox-radio.html">Checkboxs-Radios</a></li>
-                                    <li><a href="ui-spinners.html">Spinners</a></li>
-                                    <li><a href="ui-ribbons.html">Ribbons</a></li>
-                                    <li><a href="ui-portlets.html">Portlets</a></li>
-                                    <li><a href="ui-tabs.html">Tabs</a></li>
-                                    <li><a href="ui-progressbars.html">Progress Bars</a></li>
-                                    <li><a href="ui-notifications.html">Notification</a></li>
-                                    <li><a href="ui-carousel.html">Carousel</a>
-                                    <li><a href="ui-video.html">Video</a>
-                                    <li><a href="ui-tooltips-popovers.html">Tooltips & Popovers</a></li>
-                                    <li><a href="ui-images.html">Images</a></li>
-                                    <li><a href="ui-bootstrap.html">Bootstrap UI</a></li>
+                                    <li><a href="<?php echo base_url('admin/admin/tambah_pembayaran') ?>">Tambah Pembayaran </a></li>
+                                    <li><a href="<?php echo base_url('admin/admin/tambah_pemasukan') ?>">Tambah Pemasukan</a></li>
+                                    <li><a href="<?php echo base_url('admin/admin/tambah_pengeluaran') ?>">Tambah Pengeluaran</a> </li>
                                 </ul>
-                            </li>
-
-                            
+                            </li>                            
 
                             <li>
-                                <a href="todo.html"><i class="fi-layers"></i> <span> Todo </span></a>
+                                <a href="<?php echo base_url('admin/admin/laporan') ?>"><i class="fi-archive"></i> <span> Laporan </span></a>
                             </li>
 
                         </ul>
