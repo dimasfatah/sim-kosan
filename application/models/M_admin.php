@@ -7,7 +7,41 @@ public function get_penghuni(){
         $this->db->from('tb_penghuni');
         return $this->db->get();
 	}
-	
+public function delete_penghuni($id_penghuni){
+		return $this->db->query("DELETE FROM tb_penghuni WHERE id_penghuni='$id_penghuni'");
+		
+}	
+
+public function get_kamar(){
+		$this->db->select('*');
+		$this->db->group_by('lantai');
+		$this->db->from('tb_kamar');
+		return $this->db->get();
+	}
+public function get_all_kamar(){
+		$this->db->select('*');
+		$this->db->from('tb_kamar');
+		return $this->db->get();
+	}	
+public function cari_nomor($lantai){
+		 $this->db->select('*'); 
+		 $this->db->where('lantai', $lantai); 
+		 $this->db->order_by('no_kamar', 'asc');
+		 $this->db->from('tb_kamar');
+
+		 return $this->db->get();
+ 	}
+ public function cari_id_kamar($lantai,$no_kamar){
+ 		$this->db->select('*');
+ 		$this->db->where('lantai', $lantai);
+ 		$this->db->where('no_kamar',$no_kamar);
+      	$this->db->from('tb_kamar');
+      	return $this->db->get()->row();
+ }	
+ public function insert_penghuni($data){
+ 	$this->db->insert('tb_penghuni',$data);
+ }
+
 public function jumlah_penghuni(){
 
 		$query = $this->db->query("SELECT count(id_penghuni) as jumlah FROM `tb_penghuni`");
