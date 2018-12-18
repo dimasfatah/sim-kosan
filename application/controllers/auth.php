@@ -115,6 +115,6 @@ class Auth extends CI_Controller
   {
     //Menghapus semua session (sesi)
     $this->session->sess_destroy();
-    redirect('authentication/auth/login');
+    redirect('auth/login');
   }
 }
