@@ -35,6 +35,7 @@ Class Admin extends MY_Controller{
 		$this->load->view('v_topbar');
 		$this->load->view('v_data_penghuni',$data);
 		$this->load->view('v_javascript');
+		$this->load->view('v_data_penghuni_js');
 		$this->load->view('v_endbar');
 
 	}
