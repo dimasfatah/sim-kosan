@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 Class Admin extends MY_Controller{
 
-	public function __construct(){
+	public function __construct(){ 
   		parent::__construct();
   		$this->cekLogin();
 		$this->load->database();
@@ -118,13 +118,31 @@ $data['Lantai'] = $this->m_admin->jumlah_berdasarkanlantai()->result();
 
 	}
 
-	public function data_tagihan(){
+	/*public function data_tagihan(){
 		$data['data']=$this ->m_admin->get_penghuni()->result();
         $data['kamar']=$this ->m_admin->get_kamar()->result();
 
 
 		$this->load->view('v_topbar');
 		$this->load->view('v_coba_penghuni',$data);
+		$this->load->view('v_javascript');
+		$this->load->view('v_endbar');
+	}*/
+
+	public function data_tagihan(){
+		$data['data']=$this->m_admin->get_tagihan()->result();
+
+		$this->load->view('v_topbar');
+		$this->load->view('v_data_tagihan',$data); 
+		$this->load->view('v_javascript');
+		$this->load->view('v_endbar');
+	}
+
+	public function pemasukan(){
+		$data['data']=$this->m_admin->get_pemasukan()->result();
+
+		$this->load->view('v_topbar');
+		$this->load->view('v_pemasukan',$data);
 		$this->load->view('v_javascript');
 		$this->load->view('v_endbar');
 	}
