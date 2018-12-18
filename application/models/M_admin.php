@@ -20,6 +20,11 @@ public function get_pemasukan(){
 		$this->db->from('tb_pemasukan');
 		return $this->db->get();
 }
+public function get_pengeluaran(){
+		$this->db->select('tb_kredit.*');
+		$this->db->from('tb_kredit');
+		return $this->db->get();
+}
 public function get_penghuni_by_id($id){
 		$this->db->select('tb_penghuni.*,tb_kamar.no_kamar,tb_kamar.lantai');
         $this->db->join('tb_kamar','tb_kamar.id_kamar = tb_penghuni.id_kamar');
