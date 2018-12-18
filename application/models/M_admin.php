@@ -8,6 +8,18 @@ public function get_penghuni(){
         $this->db->from('tb_penghuni');
         return $this->db->get();
 	}
+public function get_tagihan(){
+		$this->db->select('tb_tagihan.*,tb_kamar.no_kamar,tb_kamar.Lantai');
+        $this->db->join('tb_kamar','tb_kamar.id_kamar = tb_tagihan.id_kamar'); 
+        $this->db->from('tb_tagihan','tb_kamar');
+        //$this->db->where('tb_tagihan.id_kamar = tb_kamar.id_kamar')
+        return $this->db->get();
+	}
+public function get_pemasukan(){
+		$this->db->select('tb_pemasukan.*');
+		$this->db->from('tb_pemasukan');
+		return $this->db->get();
+}
 public function get_penghuni_by_id($id){
 		$this->db->select('tb_penghuni.*,tb_kamar.no_kamar,tb_kamar.lantai');
         $this->db->join('tb_kamar','tb_kamar.id_kamar = tb_penghuni.id_kamar');
@@ -29,7 +41,7 @@ public function get_kamar(){
 	}
 public function get_all_kamar(){
 		$this->db->select('*');
-		$this->db->from('tb_kamar');
+		$this->db->from('tb_kamar'); 
 		return $this->db->get();
 	}	
 public function cari_nomor($lantai){
