@@ -7,7 +7,7 @@
                         lantai: $(this).val()
                     }, 
                     success : function(option){
-                        $('select[name="nomor_kamar"]').html(option); 
+                        $('select[name="no_kamar"]').html(option); 
                     }
                 }); 
             });
@@ -115,7 +115,95 @@
                         location.reload();
                     });
                 });
-            
+                            
+                    //GET UPDATE
+                    $('button.edit_penghuni').click(function() {
+                        var id= $(this).attr("data");
+                        $.ajax({
+                            type : "GET",
+                            url  : "<?php echo base_url('admin/admin/lihat_penghuni')?>",
+                            dataType : "JSON" ,
+                            data : {id:id},
+                            success: function(data){
+                                
+                                    $('#modaledit_penghuni').modal('show');
+                                    $('[name="id_penghuni"]').val(data.id_penghuni);
+                                    $('[name="nama_depan_edit"]').val(data.nama_depan);
+                                    $('[name="nama_belakang_edit"]').val(data.nama_belakang);
+                                    $('[name="alamat_edit"]').val(data.alamat);
+                                    $('[name="lantai_edit"]').val(data.lantai);
+                                    $('[name="no_kamar_edit"]').val(data.no_kamar);
+                                    $('[name="plat_nomor_edit"]').val(data.plat_nomor);
+                                    $('[name="no_ktp_edit"]').val(data.no_ktp);
+                                    $('[name="no_hp_edit"]').val(data.no_telp);
+                                    $('[name="ttl_edit"]').val(data.tempat_lahir);
+                                    $('[name="tgl_edit"]').val(data.tanggal_lahir);
+                                
+                            }
+                        });
+                        return false;
+                    });
+
+                    //tambah penghuni
+                    $("#form_edit_penghuni").submit(function(){
+                        var id = $('#id_penghuni').val();
+                        var lantai = $('#lantai_edit').val();
+                        var no_kamar= $('#no_kamar_edit').val();
+                        var nama_depan = $('#nama_depan_edit').val();
+                        var nama_belakang= $('#nama_belakang_edit').val();
+                        var no_ktp= $('#no_ktp_edit').val();
+                        var plat= $('#plat_nomor_edit').val();
+                        var alamat= $('#alamat_edit').val();
+                        var no_hp= $('#no_hp_edit').val();
+                        var ttl= $('#ttl_edit').val();
+                        var tgl= $('#tgl_edit').val();
+                        $.ajax({
+                            type: "POST",
+                            url: '<?php echo base_url('admin/admin/update_penghuni')?>',
+                                                    
+                            data:{
+                                id_penghuni : id_penghuni ,
+                                lantai:lantai ,
+                                no_kamar:no_kamar ,
+                                nama_depan:nama_depan ,
+                                nama_belakang:nama_belakang ,
+                                no_ktp:no_ktp ,
+                                plat:plat ,
+                                alamat:alamat ,
+                                no_hp:no_hp ,
+                                ttl:ttl ,
+                                tgl:tgl
+                            },
+                            success:function(data)
+                            {
+                                $('#modaltambah').modal('hide');
+                                swal(
+                                    {
+                                        title: 'Selesai!',
+                                        text: 'Berhasil Edit Data Penghuni!',
+                                        type: 'success',
+                                        confirmButtonColor: '#4fa7f3',
+                                        allowOutsideClick: false
+                                    }    
+                                )
+                                
+                            },
+                            error:function()
+                            {
+                                //alert('error');
+                                swal({
+                                  type: 'error',
+                                  title: 'Oops...',
+                                  text: 'Lengkapi form yang ada!',
+                                  showConfirmButton: true,
+                                  footer: 'Gagal Menambahkan Penghuni'
+                                })
+                            }
+                        }).then(function(){
+                            //location.reload();
+                        });
+                    });
+
                 $('button.delete_penghuni').click(function() {
                     var id = $(this).attr("data");
                     deletepenghuni(id);
