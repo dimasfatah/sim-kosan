@@ -51,5 +51,29 @@ public function cari_nomor($lantai){
  	$this->db->insert('tb_penghuni',$data);
  }
 
+public function jumlah_penghuni(){
+
+		$query = $this->db->query("SELECT count(id_penghuni) as jumlah FROM `tb_penghuni`");
+		return $query;
 }
+
+public function jumlah_kamarterisi(){
+
+		$query = $this->db->query("SELECT count(distinct id_kamar) as jumlah FROM `tb_penghuni`");
+		return $query;
+}
+
+public function jumlah_kamar(){
+
+		$query = $this->db->query("SELECT count(id_kamar) as jumlah FROM `tb_kamar`");
+		return $query;
+}
+
+public function jumlah_berdasarkanlantai(){
+
+		$query = $this->db->query("SELECT Lantai, count(no_kamar) as jumlah FROM `tb_kamar` group by Lantai");
+		return $query;
+}
+
+		}
 ?>	
