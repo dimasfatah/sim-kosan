@@ -148,8 +148,14 @@ $data['Lantai'] = $this->m_admin->jumlah_berdasarkanlantai()->result();
 	}
 
 	public function pengeluaran(){
-	
+		$data['data']=$this->m_admin->get_pengeluaran()->result();
+
+		$this->load->view('v_topbar');
+		$this->load->view('v_pengeluaran',$data);
+		$this->load->view('v_javascript');
+		$this->load->view('v_endbar');
 	}
+
 
 
 }
