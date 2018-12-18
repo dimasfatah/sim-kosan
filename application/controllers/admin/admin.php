@@ -83,6 +83,22 @@ Class Admin extends MY_Controller{
 		$this->db->where('id_penghuni',$id);
 		$this->db->update('tb_penghuni',$data);
  	}
+ 	public function tambah_pengeluaran(){
+ 		$this->load->view('v_topbar');
+ 		$this->load->view('v_tambah_pengeluaran');
+ 		$this->load->view('v_javascript');
+ 		$this->load->view('v_tambah_pengeluaran_js');
+ 		$this->load->view('v_endbar');
+ 	}
+
+ 	public function proses_tambah_pengeluaran(){
+ 		$data = array(
+ 			'keterangan' =>$this->input->post('keterangan') ,
+ 			'nominal' =>$this->input->post('nominal'),
+ 			'tgl_kredit' =>$this->input->post('tgl_kredit')
+ 		);
+ 		$this->db->insert('tb_kredit',$data);
+ 	}
 
  	public function tambah_penghuni(){
  		$lantai=$this->input->post('lantai');
