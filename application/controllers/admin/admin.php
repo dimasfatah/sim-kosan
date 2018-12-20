@@ -46,6 +46,12 @@ Class Admin extends MY_Controller{
 		echo json_encode($id_penghuni);
 	}
 
+	public function delete_kamar(){
+		$id_kamar= $this->input->post('id_kamar');
+		$this->m_admin->delete_kamar($id_kamar);
+		echo json_encode($id_kamar);
+	}
+
 	public function nokamar(){
 		$lantai=$this->input->post('lantai');
  		$nomor = $this->m_admin->cari_nomor($lantai)->result(); 
@@ -62,6 +68,11 @@ Class Admin extends MY_Controller{
  	public function lihat_penghuni(){
  		$id=$this->input->get('id');
  		$data=$this->m_admin->get_penghuni_by_id($id);
+ 		echo json_encode($data);
+ 	}
+ 	public function lihat_kamar(){
+ 		$id=$this->input->get('id');
+ 		$data=$this->m_admin->get_kamar_by_id($id);
  		echo json_encode($data);
  	}
  	public function update_penghuni(){
@@ -83,6 +94,20 @@ Class Admin extends MY_Controller{
 		$this->db->where('id_penghuni',$id);
 		$this->db->update('tb_penghuni',$data);
  	}
+<<<<<<< HEAD
+ 	public function update_kamar(){
+ 		$id=$this->input->post('id_kamar');
+ 		$lantai=$this->input->post('lantai');
+ 		$no_kamar=$this->input->post('no_kamar');
+ 		$query = $this->m_admin->cari_id_kamar($lantai,$no_kamar);
+ 		$data = array(
+			'id_kamar' => $query->id_kamar,
+			'kamar_mandi'=>$this->input->post('kamar_mandi'),
+			'luas_kamar'=>$this->input->post('luas_kamar'),
+		);
+		$this->db->where('id_kamar',$id);
+		$this->db->update('tb_kamar',$data);
+=======
  	public function tambah_pengeluaran(){
  		$this->load->view('v_topbar');
  		$this->load->view('v_tambah_pengeluaran');
@@ -98,6 +123,7 @@ Class Admin extends MY_Controller{
  			'tgl_kredit' =>$this->input->post('tgl_kredit')
  		);
  		$this->db->insert('tb_kredit',$data);
+>>>>>>> 708d4541bbb7490bedd5cb75a6daaacb2ecab73f
  	}
  	public function tambah_pemasukan(){
  		$this->load->view('v_topbar');
@@ -173,6 +199,16 @@ Class Admin extends MY_Controller{
 		$this->m_admin->insert_penghuni($data); // Calling Insert Model and its function.
  	}
 
+ 	public function tambah_kamar(){
+ 		$data = array(
+			'no_kamar' => $this->input->post('no_kamar'),
+			'lantai' => $this->input->post('lantai'),
+			'kamar_mandi' => $this->input->post('kamar_mandi'),
+			'luas_kamar' => $this->input->post('luas_kamar')			
+		);
+		$this->db->insert('tb_kamar',$data);
+ 	}
+
 	public function data_kamar(){
 		$data['data']=$this ->m_admin->get_all_kamar()->result();
 
@@ -180,6 +216,7 @@ Class Admin extends MY_Controller{
 		$this->load->view('v_topbar');
 		$this->load->view('v_data_kamar',$data);
 		$this->load->view('v_javascript');
+		$this->load->view('v_data_kamar_js');
 		$this->load->view('v_endbar');
 
 	}
@@ -201,6 +238,7 @@ Class Admin extends MY_Controller{
 		$this->load->view('v_topbar');
 		$this->load->view('v_data_tagihan',$data); 
 		$this->load->view('v_javascript');
+		$this->load->view('v_data_tagihan_js');
 		$this->load->view('v_endbar');
 	}
 

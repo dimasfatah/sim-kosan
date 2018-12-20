@@ -46,9 +46,21 @@ public function get_penghuni_by_id($id){
         $this->db->from('tb_penghuni');
         $query = $this->db->get();
         return $query->row();
+	}
+public function get_kamar_by_id($id){
+		$this->db->select('tb_kamar.*');
+        
+        $this->db->where('tb_kamar.id_kamar',$id);
+        $this->db->from('tb_kamar');
+        $query = $this->db->get();
+        return $query->row();
 	}	
 public function delete_penghuni($id_penghuni){
 		return $this->db->query("DELETE FROM tb_penghuni WHERE id_penghuni='$id_penghuni'");
+		
+}
+public function delete_kamar($id_penghuni){
+		return $this->db->query("DELETE FROM tb_kamar WHERE id_kamar='$id_kamar'");
 		
 }	
 
