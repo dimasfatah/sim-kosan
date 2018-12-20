@@ -94,6 +94,7 @@ Class Admin extends MY_Controller{
 		$this->db->where('id_penghuni',$id);
 		$this->db->update('tb_penghuni',$data);
  	}
+<<<<<<< HEAD
  	public function update_kamar(){
  		$id=$this->input->post('id_kamar');
  		$lantai=$this->input->post('lantai');
@@ -106,6 +107,23 @@ Class Admin extends MY_Controller{
 		);
 		$this->db->where('id_kamar',$id);
 		$this->db->update('tb_kamar',$data);
+=======
+ 	public function tambah_pengeluaran(){
+ 		$this->load->view('v_topbar');
+ 		$this->load->view('v_tambah_pengeluaran');
+ 		$this->load->view('v_javascript');
+ 		$this->load->view('v_tambah_pengeluaran_js');
+ 		$this->load->view('v_endbar');
+ 	}
+
+ 	public function proses_tambah_pengeluaran(){
+ 		$data = array(
+ 			'keterangan' =>$this->input->post('keterangan') ,
+ 			'nominal' =>$this->input->post('nominal'),
+ 			'tgl_kredit' =>$this->input->post('tgl_kredit')
+ 		);
+ 		$this->db->insert('tb_kredit',$data);
+>>>>>>> 708d4541bbb7490bedd5cb75a6daaacb2ecab73f
  	}
 
  	public function tambah_penghuni(){

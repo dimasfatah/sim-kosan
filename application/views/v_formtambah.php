@@ -79,13 +79,13 @@
                                                         <div class="col-md-6">
                                                             <div class="form-group">
                                                                 <label for=ttl class="control-label"> Tempat Lahir</label>
-                                                                <input type="text" class="form-control" id="ttl" name="ttl" placeholder="Tempat Lahir">
+                                                                <input type="text" class="form-control" id="ttl" name="ttl" required placeholder="Tempat Lahir">
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">
                                                             <div class="form-group">
                                                                 <label for=tanggal_lahir class="control-label">Tanggal Lahir</label>
-                                                                <input type="date" name="tgl" class="form-control" id="tgl">
+                                                                <input type="date" required name="tgl" class="form-control" id="tgl">
                                                             </div>
                                                         </div>
                                                     </div>
