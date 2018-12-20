@@ -31,25 +31,26 @@
                                         <tr>
                                             
                                             
-                                            
+                                            <th>No</th>
                                             <th>Keterangan</th>
                                             <th>Nominal</th>
-                                            <th>Tanggal Kredit</th>
+                                            <th>Tanggal</th>
                                         </thead>
                                         <tbody>
                                             </tr>
-                                        <?php 
+                                        <?php   $no=1;
                                                 foreach ($data as $row){       
                                             ?>
                                         <tr>
                                             
-                                            
+                                            <td><?php echo $no ?></td>
                                             <td><?php echo $row->keterangan ?></td>
                                             <td><?php echo $row->nominal ?></td>
                                             <td><?php echo $row->tgl_kredit ?></td>
                                            
                                         </tr>
                                         <?php
+                                            $no++;
                                               }
                                             ?>
                                             

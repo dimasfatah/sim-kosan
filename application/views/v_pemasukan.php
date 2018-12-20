@@ -9,7 +9,7 @@
                         <div class="row">
                              <div class="col-12">
                                 <div class="page-title-box">
-                                    <h4 class="page-title float-left">Data Kosan</h4>
+                                    <h4 class="page-title float-left">Data Transaksi</h4>
 
                                         
 
@@ -31,7 +31,7 @@
                                         <tr>
                                             
                                             
-                                            
+                                            <th>No</th>
                                             <th>Keterangan</th>
                                             <th>Nominal</th>
                                             <th>Tanggal Pemasukan</th>
@@ -39,17 +39,19 @@
                                         <tbody>
                                             </tr>
                                         <?php 
+                                                $no = 1;
                                                 foreach ($data as $row){       
                                             ?>
                                         <tr>
                                             
-                                            
+                                            <td><?php echo $no ?></td>
                                             <td><?php echo $row->keterangan ?></td>
                                             <td><?php echo $row->nominal ?></td>
                                             <td><?php echo $row->tgl_pemasukan ?></td>
                                            
                                         </tr>
                                         <?php
+                                            $no++;
                                               }
                                             ?>
                                             

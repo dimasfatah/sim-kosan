@@ -21,34 +21,6 @@
 
 
                         <div class="row">
-                            <div class="col-3">
-                                <div class="card-box table-responsive">
-                                    <h4 class="m-t-0 header-title"><b>Data Kamar Setiap Lantai</b></h4>
-                                    <!-- <button type="button" href="alslsl.html" class="btn btn-secondary btn-bordered waves-effect w-md"> Tambah </button> -->
-                                    <br>
-                                    <table class="table table-bordered">
-                                        <thead>
-                                        <tr>
-                                            <th>Lantai</th>
-                                            <th>Jumlah Kamar</th>
-                                        </thead>
-                                        <tbody>
-                                            </tr>
-                                         <?php
-                                                foreach ($Lantai as $row){       
-                                            ?> 
-                                        <tr>
-                                            <td><?php echo $row->Lantai; ?></td>
-                                            <td><?php echo $row->jumlah; ?></td>
-                                        </tr>
-                                        <?php
-                                             } 
-                                            ?>
-                                            
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
                             <div class="col-lg-3 col-md-6">
                                 <div class="card-box widget-box-two widget-two-custom">
                                     <i class="mdi mdi-account-multiple widget-two-icon"></i>
@@ -83,6 +55,38 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                            <div class="row">
+                                <div class="col-3">
+                                <div class="card-box table-responsive">
+                                    <h4 class="m-t-0 header-title"><b>Data Kamar Setiap Lantai</b></h4>
+                                    <!-- <button type="button" href="alslsl.html" class="btn btn-secondary btn-bordered waves-effect w-md"> Tambah </button> -->
+                                    <br>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>Lantai</th>
+                                            <th>Jumlah Kamar</th>
+                                        </thead>
+                                        <tbody>
+                                            </tr>
+                                         <?php
+                                                foreach ($Lantai as $row){       
+                                            ?> 
+                                        <tr>
+                                            <td><?php echo $row->Lantai; ?></td>
+                                            <td><?php echo $row->jumlah; ?></td>
+                                        </tr>
+                                        <?php
+                                             } 
+                                            ?>
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                                
+                            
                             
 
                            

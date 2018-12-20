@@ -99,6 +99,61 @@ Class Admin extends MY_Controller{
  		);
  		$this->db->insert('tb_kredit',$data);
  	}
+ 	public function tambah_pemasukan(){
+ 		$this->load->view('v_topbar');
+ 		$this->load->view('v_tambah_pemasukan');
+ 		$this->load->view('v_javascript');
+ 		$this->load->view('v_tambah_pemasukan_js');
+ 		$this->load->view('v_endbar');
+ 	}
+
+ 	public function proses_tambah_pemasukan(){
+ 		$data = array(
+ 			'keterangan' =>$this->input->post('keterangan') ,
+ 			'nominal' =>$this->input->post('nominal'),
+ 			'tgl_pemasukan' =>$this->input->post('tgl_pemasukan')
+ 		);
+ 		$this->db->insert('tb_pemasukan',$data);
+ 	}
+
+ 	public function tambah_pembayaran(){
+ 		$data['kamar']=$this ->m_admin->get_kamar()->result();
+
+ 		$this->load->view('v_topbar');
+ 		$this->load->view('v_tambah_pembayaran',$data);
+ 		$this->load->view('v_javascript');
+ 		$this->load->view('v_tambah_pembayaran_js');
+ 		$this->load->view('v_endbar');
+ 	}
+ 	public function proses_tambah_pembayaran(){
+ 		$lantai=$this->input->post('lantai');
+ 		$no_kamar=$this->input->post('no_kamar');
+ 		$query = $this->m_admin->cari_id_kamar($lantai,$no_kamar);
+ 		$id_kamar = $query->id_kamar;
+ 		$tagihan= $this->m_admin->cari_id_tagihan($id_kamar);
+ 		$id_tagihan = $tagihan->id_tagihan;
+ 		$bulan_awal = $this->input->post('bulan_awal');
+ 		$bulan_akhir = $this->input->post('bulan_akhir');
+ 		$bulan = $this->input->post('bulan');
+ 		$query_nominal_tagihan= $this->m_admin->cari_nominal($id_tagihan);
+ 		$nominal_tagihan= $query_nominal_tagihan->jumlah_tagihan;
+ 		$jumlah_pembayaran=($nominal_tagihan*$bulan);
+ 		if($bulan_awal==$bulan_akhir){
+ 			$keterangan=("Pembayaran kos kamar ".$lantai." No ".$no_kamar." bulan ".$bulan_akhir." ");
+ 		} else{
+ 			$keterangan=("Pembayaran kos ".$lantai." No ".$no_kamar." bulan ".$bulan_awal." - ".$bulan_akhir);
+ 		}
+ 		$data = array(
+ 			'id_tagihan' => $id_tagihan ,
+ 			'keterangan' => $keterangan ,
+ 			'bulan'	=> $bulan ,
+ 			'tgl_pembayaran' => $this->input->post('tanggal_pembayaran'),
+ 			'total_pembayaran' => $jumlah_pembayaran,
+ 			 );
+ 		$this->db->insert('tb_pembayaran',$data);
+ 		$this->m_admin->ubah_status_tagihan($id_tagihan,$bulan_akhir);
+ 	}
+
 
  	public function tambah_penghuni(){
  		$lantai=$this->input->post('lantai');
@@ -158,6 +213,16 @@ Class Admin extends MY_Controller{
 		$this->load->view('v_endbar');
 	}
 
+	public function pembayaran(){
+		$data['data']=$this->m_admin->get_pembayaran()->result();
+
+		$this->load->view('v_topbar');
+		$this->load->view('v_pembayaran',$data);
+
+		$this->load->view('v_javascript');
+		$this->load->view('v_endbar');
+	}
+
 	public function pengeluaran(){
 		$data['data']=$this->m_admin->get_pengeluaran()->result();
 
@@ -165,6 +230,16 @@ Class Admin extends MY_Controller{
 		$this->load->view('v_pengeluaran',$data);
 		$this->load->view('v_javascript');
 		$this->load->view('v_endbar');
+	}
+	public function laporan(){
+		$data['data']=$this->m_admin->ambil_laporan()->result();
+
+		$this->load->view('v_topbar');
+		$this->load->view('v_laporan',$data);
+		$this->load->view('v_javascript');
+		$this->load->view('v_laporan_js');
+		$this->load->view('v_endbar');
+
 	}
 
 

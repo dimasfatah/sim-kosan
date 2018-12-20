@@ -71,7 +71,7 @@
                             <div class="col-12">
                                 <div class="card-box table-responsive">
                                     <h4 class="m-t-0 header-title"><b>Data Penghuni</b></h4>
-                                    <button type="button" data-toggle="modal" data-target="#modaltambah" class="btn btn-secondary btn-bordered waves-effect w-md"> Tambah </button>
+                                    <button type="button" data-toggle="modal" data-target="#modaltambah" class="btn btn-custom waves-light waves-effect w-md"> Tambah </button>
                                     <br>
                                     <table id="datatable" class="table table-bordered">
                                         <thead>

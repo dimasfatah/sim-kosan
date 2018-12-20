@@ -91,8 +91,10 @@
                                     type: 'success',
                                     confirmButtonColor: '#4fa7f3',
                                     allowOutsideClick: false
-                                }    
-                            )
+                                }
+                            ).then(function(){
+                                location.reload();
+                            })
                             
                         },
                         error:function()
@@ -106,9 +108,7 @@
                               footer: 'Gagal Menambahkan Penghuni'
                             })
                         }
-                    }).then(function(){
-                        location.reload();
-                    });
+                    })
                 });
                             
                     //GET UPDATE
@@ -219,15 +219,15 @@
                         dataType:"JSON",
                         data: {id_penghuni:id},
                         success: function(data){
-                            swal("Deleted!", "Data penghuni berhasil dihapus!", "success");
+                            swal("Deleted!", "Data penghuni berhasil dihapus!", "success").then(function(){
+                                location.reload();
+                            });
                         },
                       
                         error:function(data) {
                         swal("Oops", "We couldn't connect to the server!", "error");
                         }
-                    }).then(function(){
-                        location.reload();
-                    });
+                    })
                   });
                 }
             });

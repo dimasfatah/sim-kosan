@@ -9,7 +9,7 @@
                         <div class="row">
                              <div class="col-12">
                                 <div class="page-title-box">
-                                    <h4 class="page-title float-left">Data Kosan</h4>
+                                    <h4 class="page-title float-left">Data Transaksi</h4>
 
                                         
 
@@ -23,36 +23,35 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="card-box table-responsive">
-                                    <h4 class="m-t-0 header-title"><b>Data Tagihan</b></h4>
-                                    <button type="button" href="alslsl.html" class="btn btn-secondary btn-bordered waves-effect w-md"> Tambah </button>
+                                    <h4 class="m-t-0 header-title"><b>Pembayaran</b></h4>
+                                    
                                     <br>
-                                    <table id="datatable" class="table table-bordered">
+                                    <table id="datatable" class="table table-bordered"> 
                                         <thead>
                                         <tr>
                                             
-                                            <th>No</th>
-                                            <th>Lantai</th>
-                                            <th>No Kamar</th>
-                                            <th>Jumlah Tagihan</th> 
-                                            <th>Batas</th>
-                                            <th>Pembayaran Terakhir</th>
                                             
+                                            <th>No</th>
+                                            <th>Keterangan</th>
+                                            <th>Jumlah Pembayaran</th>
+                                            <th>Tanggal Pembayaran</th>
                                         </thead>
                                         <tbody>
                                             </tr>
-                                        <?php $no=1;
+                                        <?php 
+                                                $no = 1;
                                                 foreach ($data as $row){       
                                             ?>
                                         <tr>
-                                            <td><?php echo $no; ?></td>
-                                            <td><?php echo $row->Lantai ?></td>
-                                            <td><?php echo $row->no_kamar ?></td>
-                                            <td><?php echo $row->jumlah_tagihan ?></td>
-                                            <td><?php echo $row->Batas ?></td>
-                                            <td><?php echo $row->status ?></td>
                                             
+                                            <td><?php echo $no ?></td>
+                                            <td><?php echo $row->keterangan ?></td>
+                                            <td><?php echo $row->total_pembayaran ?></td>
+                                            <td><?php echo $row->tgl_pembayaran ?></td>
+                                           
                                         </tr>
-                                        <?php $no++;
+                                        <?php
+                                            $no++;
                                               }
                                             ?>
                                             

@@ -52,7 +52,7 @@
                         <li class="list-inline-item dropdown notification-list">
                             <a class="nav-link dropdown-toggle waves-effect waves-light nav-user" data-toggle="dropdown" href="#" role="button"
                                aria-haspopup="false" aria-expanded="false">
-                                <img src="<?php echo base_url('assets/images/users/avatar-1.jpg')?>" alt="user" class="rounded-circle">
+                                <img src="<?php echo base_url('assets/images/icons/settings.svg')?>" alt="user" class="rounded-circle">
                             </a>
                             <div class="dropdown-menu dropdown-menu-right profile-dropdown " aria-labelledby="Preview">
                                 <!-- item-->

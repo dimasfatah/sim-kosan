@@ -14,21 +14,21 @@
         <script>
         	$(document).ready(function(){
         		//parsley        
-                $('form_tambah_pengeluaran').parsley();   
+                $('form_tambah_pemasukan').parsley();   
 
-                $("#form_tambah_pengeluaran").submit(function(e){
+                $("#form_tambah_pemasukan").submit(function(e){
                     e.preventDefault();
                     var keterangan = $('#keterangan').val();
-                    var nominal= $('#jumlah_pengeluaran').val();
-                    var tgl_kredit = $('#tgl_pengeluaran').val();
+                    var nominal= $('#jumlah_pemasukan').val();
+                    var tgl_pemasukan = $('#tgl_pemasukan').val();
                     $.ajax({
                         type: "POST",
-                        url: '<?php echo base_url('admin/admin/proses_tambah_pengeluaran')?>',
+                        url: '<?php echo base_url('admin/admin/proses_tambah_pemasukan')?>',
                                                 
                         data:{
                             keterangan :keterangan ,
                             nominal :nominal ,
-                            tgl_kredit :tgl_kredit
+                            tgl_pemasukan :tgl_pemasukan
                         },
                         success:function(data)
                         {
@@ -36,13 +36,13 @@
                             swal(
                                 {
                                     title: 'Selesai!',
-                                    text: 'Berhasil Menambahkan Pengeluaran!',
+                                    text: 'Berhasil Menambahkan pemasukan!',
                                     type: 'success',
                                     confirmButtonColor: '#4fa7f3',
                                     allowOutsideClick: false
                                 }    
                             )
-                            document.getElementById('form_tambah_pengeluaran').reset();
+                            document.getElementById('form_tambah_pemasukan').reset();
                             
                         },
                         error:function()

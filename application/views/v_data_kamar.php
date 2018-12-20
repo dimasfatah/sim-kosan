@@ -51,25 +51,27 @@
                                     <table id="datatable" class="table table-bordered">
                                         <thead>
                                         <tr>
-                                            <th>Nomor Kamar</th>
+                                            <th width="6%">No</th>
                                             <th>Lantai</th>
+                                            <th width="11%">Nomor Kamar</th>
                                             <th>Kamar Mandi</th>
-                                            <th>Luas Kamar(m2)</th>
+                                            <th width="11%">Luas Kamar(m2)</th>
                                             
                                         </tr>    
                                         </thead>
                                         <tbody>
                                             
-                                        <?php
+                                        <?php $no=1;
                                                 foreach ($data as $row){       
                                             ?>
                                         <tr>
-                                            <td><?php echo $row->no_kamar ?></td>
+                                            <td><?php echo $no ?></td>
                                             <td><?php echo $row->lantai ?></td>
+                                            <td><?php echo $row->no_kamar ?></td>
                                             <td><?php echo $row->kamar_mandi ?></td>
                                             <td><?php echo $row->luas_kamar ?></td>
                                         </tr>
-                                        <?php
+                                        <?php $no++;
                                               }
                                             ?>
                                             
