@@ -25,7 +25,7 @@
                                                 <?php echo form_open('',array('id'=>'form_tambah_kamar')); ?>
                                                 <div class="modal-header">
                                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                                    <h4 class="modal-title">Tambah data penghuni kos</h4>
+                                                    <h4 class="modal-title">Tambah data kamar kos</h4>
                                                 </div>
 
                                                 <div class="modal-body">
@@ -40,6 +40,8 @@
                                             </div>
                                         </div>
                                     </div><!-- /.modal -->
+
+
 
 
                         <div class="row">
