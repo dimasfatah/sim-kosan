@@ -59,8 +59,7 @@
                                                         </select>
                                                     </div>
 
-                                                </div>
-                                                
+                                                </div>                                                
                                                 <div class="col-md-6 text-center text-right">
                                                     <div class="form-group float-right">
                                                         <input id="footable-search" type="text" placeholder="Search" class="form-control" autocomplete="on">

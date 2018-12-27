@@ -1,6 +1,8 @@
         
         <!-- Parsley js -->
-        <script type="text/javascript" src="<?php echo base_url('plugins/parsleyjs/parsley.min.js')?>"></script>
+        <!--FooTable-->
+        <script src="<?php echo base_url('plugins/footable/js/footable.all.min.js')?>"></script>
+        
         <!-- Required datatable js -->
         <script src="<?php echo base_url('plugins/datatables/jquery.dataTables.min.js')?>"></script>
         <script src="<?php echo base_url('plugins/datatables/dataTables.bootstrap4.min.js')?>"></script>
@@ -33,19 +35,30 @@
         <script>
             $(document).ready(function(){
                 //datatable
-                $('#datatable').DataTable();
-                //Buttons examples
-                var table = $('#datatable-buttons').DataTable({
-                    lengthChange: false,
-                    buttons: ['copy', 'excel', 'pdf', 'colvis']
+                //$('#datatable').DataTable();
+
+                var filtering = $('#datatable');
+                filtering.footable().on('footable_filtering', function (e) {
+                    var selected = $('#datatable-status').find(':selected').val();
+                    e.filter += (e.filter && e.filter.length > 0) ? ' ' + selected : selected;
+                    e.clear = !e.filter;
                 });
 
-                table.buttons().container()
-                        .appendTo('#datatable-buttons_wrapper .col-md-6:eq(0)');
-                //parsley        
-                $('form').parsley();        
+                // Filter status
+                $('#datatable-status').change(function (e) {
+                    e.preventDefault();
+                    filtering.trigger('footable_filter', {filter: $(this).val()});
+                });
+
+                // Search input
+                $('#datatable-search').on('input', function (e) {
+                    e.preventDefault();
+                    filtering.trigger('footable_filter', {filter: $(this).val()});
+                });
+                //Buttons examples        
                 //tambah penghuni
                 $("#form_tambah_kamar").submit(function(e){
+                    console.log('submit');
                     e.preventDefault();
                     var lantai = $('#lantai').val();
                     var no_kamar= $('#no_kamar').val();
@@ -71,7 +84,9 @@
                                     confirmButtonColor: '#4fa7f3',
                                     allowOutsideClick: false
                                 }    
-                            )
+                            ).then(function(){
+                                location.reload();
+                            })
                             
                         },
                         error:function()
@@ -88,57 +103,36 @@
                     })
                 });
                             
-                    //GET UPDATE
-                    $('button.edit_kamar').click(function() {
-                        var id= $(this).attr("data");
-                        $.ajax({
-                            type : "GET",
-                            url  : "<?php echo base_url('admin/admin/lihat_kamar')?>",
-                            dataType : "JSON" ,
-                            data : {id:id},
-                            success: function(data){
-                                
-                                    $('#modaledit_kamar').modal('show');
-                                    $('[name="id_kamar"]').val(data.id_kamar);
-                                    $('[name="lantai_edit"]').val(data.lantai);
-                                    $('[name="no_kamar_edit"]').val(data.no_kamar);                                  
-                                    $('[name="kamar_mandi"]').val(data.kamar_mandi);
-                                    $('[name="luas_kamar"]').val(data.luas_kamar);
-                                
-                            }
-                        });
-                        return false;
-                    });
-
-                $('button.delete_kamar').click(function() {
+                    
+                $('button.edit_status_kamar').click(function() {
                     var id = $(this).attr("data");
-                    deletepenghuni(id);
+                    ubahstatuskamar(id);
                   });
 
-                  function deletepenghuni(id) {
+                  function ubahstatuskamar(id) {
                     swal({
                       title: "Apakah anda yakin?", 
-                      text: "Anda akan menghapus kamar ini dari database kosan", 
+                      text: "Anda akan menghapus data penghuni dan tagihan yang berhubungan dengan kamar ini", 
                       type: "warning",
                       showCancelButton: true,
-                      confirmButtonText:"Ya, Hapus kamar!",
+                      confirmButtonText:"Ya, ubah status!",
                       confirmButtonColor:"#ec6c62"
                     }).then(function() {
+                      console.log(id);  
                       $.ajax({
-                        url: "<?php echo base_url('admin/admin/delete_kamar')?>",
+                        url: "<?php echo base_url('admin/admin/ubah_status_kamar')?>",
                         type: "POST",
-                        dataType:"JSON",
-                        data: {id_kamar:id},
+                        data: {id:id},
                         success: function(data){
-                            swal("Deleted!", "Data kamar berhasil dihapus!", "success");
+                            swal("Sukses!", "Status kamar menjadi kosong!", "success").then(function(){
+                        location.reload();
+                        });
                         },
                       
                         error:function(data) {
                         swal("Oops", "We couldn't connect to the server!", "error");
                         }
-                    }).then(function(){
-                        location.reload();
-                    });
+                    })
                   });
                 }
             });
@@ -148,6 +142,7 @@
         
 
         <!-- ajax -->
+        <script src="<?php echo base_url('assets/pages/jquery.footable.js')?>"></script>
         
         
 

@@ -83,11 +83,31 @@ public function cari_nomor($lantai){
 
 		 return $this->db->get();
  	}
+public function cari_nomor_kosong($lantai){
+		 $this->db->select('*'); 
+		 $this->db->where('lantai', $lantai);
+		 $this->db->where('status', 'Kosong'); 
+		 $this->db->order_by('no_kamar', 'asc');
+		 $this->db->from('tb_kamar');
+
+		 return $this->db->get();
+ 	} 	
 public function ubah_status_tagihan($id_tagihan,$bulan_akhir){
 		$this->db->set('status',$bulan_akhir);
 		$this->db->where('id_tagihan',$id_tagihan);
 		$this->db->update('tb_tagihan');
- 	}
+	 }
+public function ubah_status_kamar($id_kamar){
+		$this->db->set('status','Terisi');
+		$this->db->where('id_kamar',$id_kamar);
+		$this->db->update('tb_kamar');
+}
+public function ubah_status_kosong($id_kamar){
+	$this->db->set('status','Kosong');
+	$this->db->where('id_kamar',$id_kamar);
+	$this->db->update('tb_kamar');
+}	
+
  public function cari_id_kamar($lantai,$no_kamar){
  		$this->db->select('*');
  		$this->db->where('lantai', $lantai);
@@ -111,6 +131,16 @@ public function cari_id_tagihan($id_kamar){
  public function insert_penghuni($data){
  	$this->db->insert('tb_penghuni',$data);
  }
+
+ public function delete_penghuni_by_kamar($id_kamar){
+	 $this->db->where('id_kamar',$id_kamar);
+	 $this->db->delete('tb_penghuni');
+ }
+ public function delete_tagihan_by_kamar($id_kamar){
+	$this->db->where('id_kamar',$id_kamar);
+	$this->db->delete('tb_tagihan');
+}
+
 
 public function jumlah_penghuni(){
 

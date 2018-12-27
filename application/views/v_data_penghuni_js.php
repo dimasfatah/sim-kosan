@@ -51,7 +51,7 @@
                 var table_penghuni = $('#datatable').DataTable({
                 });
                 //parsley        
-                $('form').parsley();        
+                //$('form').parsley();        
                 //tambah penghuni
                 $("#form_tambah_penghuni").submit(function(e){
                     e.preventDefault();
@@ -139,8 +139,9 @@
                         return false;
                     });
 
-                    //tambah penghuni
-                    $("#form_edit_penghuni").submit(function(){
+                    //edit penghuni
+                    $("#form_edit_penghuni").submit(function(e){
+                    e.preventDefault();
                         var id = $('#id_penghuni').val();
                         var lantai = $('#lantai_edit').val();
                         var no_kamar= $('#no_kamar_edit').val();
@@ -151,7 +152,7 @@
                         var alamat= $('#alamat_edit').val();
                         var no_hp= $('#no_hp_edit').val();
                         var ttl= $('#ttl_edit').val();
-                        var tgl= $('#tgl_edit').val();
+                        var tgl= $('#tgl_edit').val();  
                         $.ajax({
                             type: "POST",
                             url: '<?php echo base_url('admin/admin/update_penghuni')?>',
@@ -180,7 +181,9 @@
                                         confirmButtonColor: '#4fa7f3',
                                         allowOutsideClick: false
                                     }    
-                                )
+                                ).then(function(){
+                                    location.reload();
+                                });
                                 
                             },
                             error:function()
@@ -194,9 +197,7 @@
                                   footer: 'Gagal Menambahkan Penghuni'
                                 })
                             }
-                        }).then(function(){
-                            //location.reload();
-                        });
+                        })
                     });
 
                 $('button.delete_penghuni').click(function() {

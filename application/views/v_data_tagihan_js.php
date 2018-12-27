@@ -1,5 +1,21 @@
+        <script type="text/javascript">
+            $('select[name="lantai"]').on('change', function(){
+                $.ajax({
+                    type : 'POST', 
+                    url  : '<?php echo base_url('admin/admin/nokamar_kosong'); ?>', 
+                    data : {
+                        lantai: $(this).val()
+                    }, 
+                    success : function(option){
+                        $('select[name="no_kamar"]').html(option); 
+                    }
+                }); 
+            });
+        </script>
 <!-- Parsley js -->
-        <script type="text/javascript" src="<?php echo base_url('plugins/parsleyjs/parsley.min.js')?>"></script>
+        <!-- Footable -->
+        <script src="<?php echo base_url('plugins/footable/js/footable.all.min.js')?>"></script>
+       
         <!-- Required datatable js -->
         <script src="<?php echo base_url('plugins/datatables/jquery.dataTables.min.js')?>"></script>
         <script src="<?php echo base_url('plugins/datatables/dataTables.bootstrap4.min.js')?>"></script>
@@ -30,7 +46,74 @@
         
         
         <script>
-            
+            $(document).ready(function(){
+
+                var filtering = $('#datatable');
+                filtering.footable().on('footable_filtering', function (e) {
+                    var selected = $('#datatable-status').find(':selected').val();
+                    e.filter += (e.filter && e.filter.length > 0) ? ' ' + selected : selected;
+                    e.clear = !e.filter;
+                });
+
+                // Filter status
+                $('#datatable-status').change(function (e) {
+                    e.preventDefault();
+                    filtering.trigger('footable_filter', {filter: $(this).val()});
+                });
+
+                // Search input
+                $('#datatable-search').on('input', function (e) {
+                    e.preventDefault();
+                    filtering.trigger('footable_filter', {filter: $(this).val()});
+                });
+
+                //tambah penghuni
+                $("#form_tambah_tagihan").submit(function(e){
+                    e.preventDefault();
+                    var lantai = $('#lantai').val();
+                    var no_kamar= $('#no_kamar').val();
+                    var tagihan = $('#tagihan').val();
+                    var batas= $('#batas').val();
+                    $.ajax({
+                        type: "POST",
+                        url: '<?php echo base_url('admin/admin/tambah_tagihan')?>',
+                                                
+                        data:{
+                            lantai:lantai ,
+                            no_kamar:no_kamar ,
+                            tagihan:tagihan,
+                            batas:batas
+                        },
+                        success:function(data)
+                        {
+                            $('#modaltambahtagihan').modal('hide');
+                            swal(
+                                {
+                                    title: 'Selesai!',
+                                    text: 'Berhasil Menambahkan Penghuni!',
+                                    type: 'success',
+                                    confirmButtonColor: '#4fa7f3',
+                                    allowOutsideClick: false
+                                }
+                            ).then(function(){
+                                location.reload();
+                            })
+                            
+                        },
+                        error:function()
+                        {
+                            //alert('error');
+                            swal({
+                              type: 'error',
+                              title: 'Oops...',
+                              text: 'Lengkapi form yang ada!',
+                              showConfirmButton: true,
+                              footer: 'Gagal Menambahkan Penghuni'
+                            })
+                        }
+                    })
+                });
+            })
         </script>
 
         

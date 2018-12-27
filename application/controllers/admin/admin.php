@@ -60,6 +60,14 @@ Class Admin extends MY_Controller{
 		echo '<option value='.$r->no_kamar.'>'.$r->no_kamar.'</option>'; 
  		}
  	}
+ 	public function nokamar_kosong(){
+		$lantai=$this->input->post('lantai');
+ 		$nomor = $this->m_admin->cari_nomor_kosong($lantai)->result(); 
+ 		echo '<option> Nomor </option>';
+ 		foreach ($nomor as $r){
+		echo '<option value='.$r->no_kamar.'>'.$r->no_kamar.'</option>'; 
+ 		}
+ 	}
 
  	public function data_all_penghuni(){
  		$data=$this->m_admin->get_penghuni()->result();
@@ -94,7 +102,7 @@ Class Admin extends MY_Controller{
 		$this->db->where('id_penghuni',$id);
 		$this->db->update('tb_penghuni',$data);
  	}
-<<<<<<< HEAD
+
  	public function update_kamar(){
  		$id=$this->input->post('id_kamar');
  		$lantai=$this->input->post('lantai');
@@ -107,8 +115,9 @@ Class Admin extends MY_Controller{
 		);
 		$this->db->where('id_kamar',$id);
 		$this->db->update('tb_kamar',$data);
-=======
- 	public function tambah_pengeluaran(){
+	}
+
+ 		public function tambah_pengeluaran(){
  		$this->load->view('v_topbar');
  		$this->load->view('v_tambah_pengeluaran');
  		$this->load->view('v_javascript');
@@ -123,7 +132,7 @@ Class Admin extends MY_Controller{
  			'tgl_kredit' =>$this->input->post('tgl_kredit')
  		);
  		$this->db->insert('tb_kredit',$data);
->>>>>>> 708d4541bbb7490bedd5cb75a6daaacb2ecab73f
+
  	}
  	public function tambah_pemasukan(){
  		$this->load->view('v_topbar');
@@ -208,7 +217,26 @@ Class Admin extends MY_Controller{
 		);
 		$this->db->insert('tb_kamar',$data);
  	}
+	 public function tambah_tagihan(){
+		 $no=$this->input->post('no_kamar');
+		 $lantai=$this->input->post('lantai');
+		 $query = $this->m_admin->cari_id_kamar($lantai,$no);
+ 		 $id_kamar = $query->id_kamar;
 
+		$data = array(
+		   'id_kamar' => $id_kamar,
+		   'jumlah_tagihan' => $this->input->post('tagihan'),
+		   'batas' => $this->input->post('batas'),			
+	   );
+	   $this->db->insert('tb_tagihan',$data);
+	   $this->m_admin->ubah_status_kamar($id_kamar);
+	}
+	public function ubah_status_kamar(){
+		$id_kamar=$this->input->post('id');
+		$this->m_admin->ubah_status_kosong($id_kamar);
+		$this->m_admin->delete_penghuni_by_kamar($id_kamar);
+		$this->m_admin->delete_tagihan_by_kamar($id_kamar);
+	}
 	public function data_kamar(){
 		$data['data']=$this ->m_admin->get_all_kamar()->result();
 
@@ -234,6 +262,7 @@ Class Admin extends MY_Controller{
 
 	public function data_tagihan(){
 		$data['data']=$this->m_admin->get_tagihan()->result();
+		$data['kamar']=$this->m_admin->get_kamar()->result();
 
 		$this->load->view('v_topbar');
 		$this->load->view('v_data_tagihan',$data); 
