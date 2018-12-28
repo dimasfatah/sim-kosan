@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 06, 2018 at 01:37 PM
+-- Generation Time: Dec 28, 2018 at 02:08 PM
 -- Server version: 10.1.29-MariaDB
 -- PHP Version: 7.2.0
 
@@ -27,23 +27,50 @@ USE `simkosan`;
 -- --------------------------------------------------------
 
 --
+-- Stand-in structure for view `detail_transaksi`
+-- (See below for the actual view)
+--
+CREATE TABLE `detail_transaksi` (
+`id_transaksi` int(11)
+,`keterangan_pemasukan` varchar(100)
+,`keterangan_pembayaran` varchar(100)
+,`keterangan_kredit` varchar(100)
+,`debit_pemasukan` decimal(10,2)
+,`debit_pembayaran` decimal(10,2)
+,`kredit` decimal(10,2)
+,`tanggal_pembayaran` date
+,`tanggal_kredit` date
+,`tanggal_pemasukan` date
+);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tb_kamar`
 --
 
 CREATE TABLE `tb_kamar` (
   `id_kamar` int(11) NOT NULL,
   `no_kamar` int(11) NOT NULL,
-  `Lantai` varchar(25) NOT NULL,
-  `Kamar_mandi` enum('luar','dalam','','') NOT NULL,
-  `luas_kamar` double NOT NULL
+  `lantai` varchar(25) NOT NULL,
+  `kamar_mandi` enum('luar','dalam','','') NOT NULL,
+  `luas_kamar` double NOT NULL,
+  `status` enum('Terisi','Kosong','','') NOT NULL DEFAULT 'Kosong'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_kamar`
 --
 
-INSERT INTO `tb_kamar` (`id_kamar`, `no_kamar`, `Lantai`, `Kamar_mandi`, `luas_kamar`) VALUES
-(1, 1, 'aqso', 'dalam', 9);
+INSERT INTO `tb_kamar` (`id_kamar`, `no_kamar`, `lantai`, `kamar_mandi`, `luas_kamar`, `status`) VALUES
+(1, 1, 'aqso', 'dalam', 9, 'Kosong'),
+(2, 1, 'nabawi', 'luar', 9, 'Kosong'),
+(3, 1, 'harom', 'luar', 9, 'Kosong'),
+(4, 2, 'aqso', 'luar', 9, 'Kosong'),
+(5, 2, 'nabawi', 'luar', 9, 'Kosong'),
+(6, 2, 'harom', 'dalam', 12, 'Kosong'),
+(7, 4, 'aqso', 'dalam', 9, 'Kosong'),
+(8, 5, 'aqso', 'dalam', 9, 'Kosong');
 
 -- --------------------------------------------------------
 
@@ -58,6 +85,29 @@ CREATE TABLE `tb_kredit` (
   `tgl_kredit` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `tb_kredit`
+--
+
+INSERT INTO `tb_kredit` (`id_kredit`, `keterangan`, `nominal`, `tgl_kredit`) VALUES
+(1, 'Bayar Wifi bulan september', '240000.00', '2018-12-11'),
+(2, 'Bayar Air bulan November', '200000.00', '2018-12-13'),
+(3, 'Biaya Bersalin', '200000.00', '2018-12-19'),
+(4, 'Biaya Genteng Bocor', '500000.00', '2018-12-21'),
+(5, 'Bayar Genteng', '500.00', '2018-12-10'),
+(6, 'Bayar Rumah Sakit', '200.00', '2018-12-02');
+
+--
+-- Triggers `tb_kredit`
+--
+DELIMITER $$
+CREATE TRIGGER `pengeluaran` AFTER INSERT ON `tb_kredit` FOR EACH ROW insert into tb_transaksi
+(id_kredit)
+VALUES
+(new.id_kredit)
+$$
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
@@ -71,6 +121,25 @@ CREATE TABLE `tb_pemasukan` (
   `tgl_pemasukan` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `tb_pemasukan`
+--
+
+INSERT INTO `tb_pemasukan` (`id_pemasukan`, `keterangan`, `nominal`, `tgl_pemasukan`) VALUES
+(1, 'Biaya Fitness', '200000.00', '2018-12-18'),
+(2, 'Pembayaran Kedai', '500000.00', '2018-12-16'),
+(3, 'Bayar Air bulan November', '500000.00', '2018-12-10');
+
+--
+-- Triggers `tb_pemasukan`
+--
+DELIMITER $$
+CREATE TRIGGER `pemasukan` AFTER INSERT ON `tb_pemasukan` FOR EACH ROW insert into tb_transaksi
+(id_pemasukan) VALUES
+(new.id_pemasukan)
+$$
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
@@ -80,8 +149,27 @@ CREATE TABLE `tb_pemasukan` (
 CREATE TABLE `tb_pembayaran` (
   `id_pembayaran` int(11) NOT NULL,
   `id_tagihan` int(11) NOT NULL,
-  `tgl_pembayaran` date NOT NULL
+  `keterangan` varchar(100) NOT NULL,
+  `bulan` int(11) NOT NULL,
+  `tgl_pembayaran` date NOT NULL,
+  `total_pembayaran` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tb_pembayaran`
+--
+
+INSERT INTO `tb_pembayaran` (`id_pembayaran`, `id_tagihan`, `keterangan`, `bulan`, `tgl_pembayaran`, `total_pembayaran`) VALUES
+(8, 1, 'Pembayaran kos aqso No 1 bulan januari - april', 4, '2018-01-08', '1800000.00');
+
+--
+-- Triggers `tb_pembayaran`
+--
+DELIMITER $$
+CREATE TRIGGER `pembayaran` AFTER INSERT ON `tb_pembayaran` FOR EACH ROW insert into tb_transaksi
+(id_pembayaran) VALUES (new.id_pembayaran)
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -102,6 +190,14 @@ CREATE TABLE `tb_penghuni` (
   `tanggal_lahir` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `tb_penghuni`
+--
+
+INSERT INTO `tb_penghuni` (`id_penghuni`, `id_kamar`, `nama_depan`, `nama_belakang`, `no_ktp`, `plat_nomor`, `alamat`, `no_telp`, `tempat_lahir`, `tanggal_lahir`) VALUES
+(1, 8, 'Dimas', 'Fatahhilla', '3224934903023', 'P4288ZW', 'Pesanggaran', '085335472057', 'Banyuwangi', '1997-07-12'),
+(2, 7, 'Anggara', 'Dwi', '3224934903023', 'P4288ZW', 'Bondowoso', '085335472898', 'Bondowoso', '1998-12-11');
+
 -- --------------------------------------------------------
 
 --
@@ -109,12 +205,19 @@ CREATE TABLE `tb_penghuni` (
 --
 
 CREATE TABLE `tb_tagihan` (
-  `id_tagihan` int(11) NOT NULL ,
+  `id_tagihan` int(11) NOT NULL,
   `id_kamar` int(11) NOT NULL,
-  `jumlah tagihan` decimal(10,2) NOT NULL,
+  `jumlah_tagihan` decimal(10,2) NOT NULL,
   `Batas` int(11) NOT NULL,
-  `status` enum('dibayar','belum dibayar','','') NOT NULL
+  `status` varchar(25) NOT NULL DEFAULT 'Belum bayar'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tb_tagihan`
+--
+
+INSERT INTO `tb_tagihan` (`id_tagihan`, `id_kamar`, `jumlah_tagihan`, `Batas`, `status`) VALUES
+(1, 1, '450000.00', 8, 'april');
 
 -- --------------------------------------------------------
 
@@ -128,6 +231,18 @@ CREATE TABLE `tb_transaksi` (
   `id_pemasukan` int(11) DEFAULT NULL,
   `id_pembayaran` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tb_transaksi`
+--
+
+INSERT INTO `tb_transaksi` (`id_transaksi`, `id_kredit`, `id_pemasukan`, `id_pembayaran`) VALUES
+(5, 5, NULL, NULL),
+(6, 6, NULL, NULL),
+(8, NULL, 1, NULL),
+(9, NULL, 2, NULL),
+(10, NULL, 3, NULL),
+(15, NULL, NULL, 8);
 
 -- --------------------------------------------------------
 
@@ -147,7 +262,17 @@ CREATE TABLE `tb_user` (
 --
 
 INSERT INTO `tb_user` (`id_user`, `username`, `password`, `level`) VALUES
-(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'admin');
+(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'admin'),
+(2, 'superadmin', '17c4520f6cfd1ab53d8745e84681eb49', 'superadmin');
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `detail_transaksi`
+--
+DROP TABLE IF EXISTS `detail_transaksi`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `detail_transaksi`  AS  select `tb_transaksi`.`id_transaksi` AS `id_transaksi`,(select `tb_pemasukan`.`keterangan` from `tb_pemasukan` where (`tb_pemasukan`.`id_pemasukan` = `tb_transaksi`.`id_pemasukan`)) AS `keterangan_pemasukan`,(select `tb_pembayaran`.`keterangan` from `tb_pembayaran` where (`tb_pembayaran`.`id_pembayaran` = `tb_transaksi`.`id_pembayaran`)) AS `keterangan_pembayaran`,(select `tb_kredit`.`keterangan` from `tb_kredit` where (`tb_kredit`.`id_kredit` = `tb_transaksi`.`id_kredit`)) AS `keterangan_kredit`,(select `tb_pemasukan`.`nominal` from `tb_pemasukan` where (`tb_pemasukan`.`id_pemasukan` = `tb_transaksi`.`id_pemasukan`)) AS `debit_pemasukan`,(select `tb_pembayaran`.`total_pembayaran` from `tb_pembayaran` where (`tb_pembayaran`.`id_pembayaran` = `tb_transaksi`.`id_pembayaran`)) AS `debit_pembayaran`,(select `tb_kredit`.`nominal` from `tb_kredit` where (`tb_kredit`.`id_kredit` = `tb_transaksi`.`id_kredit`)) AS `kredit`,(select `tb_pembayaran`.`tgl_pembayaran` from `tb_pembayaran` where (`tb_pembayaran`.`id_pembayaran` = `tb_transaksi`.`id_pembayaran`)) AS `tanggal_pembayaran`,(select `tb_kredit`.`tgl_kredit` from `tb_kredit` where (`tb_kredit`.`id_kredit` = `tb_transaksi`.`id_kredit`)) AS `tanggal_kredit`,(select `tb_pemasukan`.`tgl_pemasukan` from `tb_pemasukan` where (`tb_pemasukan`.`id_pemasukan` = `tb_transaksi`.`id_pemasukan`)) AS `tanggal_pemasukan` from `tb_transaksi` ;
 
 --
 -- Indexes for dumped tables
@@ -213,45 +338,53 @@ ALTER TABLE `tb_user`
 --
 
 --
+-- AUTO_INCREMENT for table `tb_kamar`
+--
+ALTER TABLE `tb_kamar`
+  MODIFY `id_kamar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `tb_kredit`
+--
+ALTER TABLE `tb_kredit`
+  MODIFY `id_kredit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT for table `tb_pemasukan`
 --
 ALTER TABLE `tb_pemasukan`
-  MODIFY `id_pemasukan` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_pemasukan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tb_pembayaran`
 --
 ALTER TABLE `tb_pembayaran`
-  MODIFY `id_pembayaran` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_pembayaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `tb_penghuni`
 --
 ALTER TABLE `tb_penghuni`
-  MODIFY `id_penghuni` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_penghuni` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `tb_tagihan`
+--
+ALTER TABLE `tb_tagihan`
+  MODIFY `id_tagihan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tb_transaksi`
 --
 ALTER TABLE `tb_transaksi`
-  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `tb_user`
 --
 ALTER TABLE `tb_user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
-ALTER TABLE `tb_kamar`
-  MODIFY `id_kamar` int(11) NOT NULL AUTO_INCREMENT;
-  
-ALTER TABLE `tb_tagihan`
-  MODIFY `id_tagihan` int(11) NOT NULL AUTO_INCREMENT;  
-  
-ALTER TABLE `tb_kredit`
-  MODIFY `id_kredit` int(11) NOT NULL AUTO_INCREMENT;  
-  
-  
 --
 -- Constraints for dumped tables
 --
@@ -260,7 +393,7 @@ ALTER TABLE `tb_kredit`
 -- Constraints for table `tb_pembayaran`
 --
 ALTER TABLE `tb_pembayaran`
-  ADD CONSTRAINT `tb_pembayaran_ibfk_1` FOREIGN KEY (`id_tagihan`) REFERENCES `tb_tagihan` (`id_tagihan`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `tb_pembayaran_ibfk_1` FOREIGN KEY (`id_tagihan`) REFERENCES `tb_tagihan` (`id_tagihan`) ON DELETE NO ACTION ON UPDATE CASCADE;
 
 --
 -- Constraints for table `tb_penghuni`
