@@ -161,6 +161,21 @@ public function ambil_laporan(){
 		");
 	return $query;
 }
+public function get_laporan_year(){
+	$query = $this->db->query("
+	SELECT id_transaksi,
+		(SELECT keterangan from tb_pemasukan WHERE id_pemasukan=tb_transaksi.id_pemasukan) as keterangan_pemasukan,
+		(SELECT keterangan from tb_pembayaran WHERE id_pembayaran=tb_transaksi.id_pembayaran) as keterangan_pembayaran,
+		(SELECT keterangan from tb_kredit WHERE id_kredit=tb_transaksi.id_kredit) as keterangan_kredit,
+		(SELECT nominal from tb_pemasukan WHERE id_pemasukan=tb_transaksi.id_pemasukan) as debit_pemasukan,
+		(SELECT total_pembayaran from tb_pembayaran WHERE id_pembayaran=tb_transaksi.id_pembayaran) AS debit_pembayaran,(SELECT nominal from tb_kredit WHERE id_kredit=tb_transaksi.id_kredit) as kredit,
+		(SELECT tgl_pembayaran from tb_pembayaran WHERE id_pembayaran=tb_transaksi.id_pembayaran)as tanggal_pembayaran,(SELECT tgl_kredit from tb_kredit WHERE id_kredit=tb_transaksi.id_kredit)as tanggal_kredit,
+		(SELECT tgl_pemasukan from tb_pemasukan WHERE id_pemasukan=tb_transaksi.id_pemasukan)as tanggal_pemasukan
+		from tb_transaksi
+        group by YEAR(tanggal_pemasukan) OR YEAR(tanggal_kredit) OR YEAR(tanggal_pembayaran)
+	");
+	return $query;
+}
 
 public function jumlah_kamarterisi(){
 
