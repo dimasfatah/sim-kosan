@@ -1,19 +1,4 @@
-        <script type="text/javascript">
-            $('select[name="lantai"]').on('change', function(){
-                $.ajax({
-                    type : 'POST', 
-                    url  : '<?php echo base_url('admin/admin/nokamar'); ?>',
-                    url  : '<?php echo base_url('admin/superadmin/nokamar'); ?>', 
-                    data : {
-                        lantai: $(this).val()
-                    }, 
-                    success : function(option){
-                        $('select[name="no_kamar"]').html(option); 
-                    }
-                }); 
-            });
-        </script>
-        <!-- Parsley js -->
+<!-- Parsley js -->
         <script type="text/javascript" src="<?php echo base_url('plugins/parsleyjs/parsley.min.js')?>"></script>
         <!-- Required datatable js -->
         <script src="<?php echo base_url('plugins/datatables/jquery.dataTables.min.js')?>"></script>
@@ -49,39 +34,26 @@
                 //datatable
                 //$('#datatable').DataTable();
                 //Buttons examples
-                var table_penghuni = $('#datatable').DataTable({
+                var table_user = $('#datatable').DataTable({
                 });
                 //parsley        
                 //$('form').parsley();        
                 //tambah penghuni
-                $("#form_tambah_penghuni").submit(function(e){
+                $("#form_tambah_user").submit(function(e){
                     e.preventDefault();
-                    var lantai = $('#lantai').val();
-                    var no_kamar= $('#no_kamar').val();
-                    var nama_depan = $('#nama_depan').val();
-                    var nama_belakang= $('#nama_belakang').val();
-                    var no_ktp= $('#no_ktp').val();
-                    var plat= $('#plat').val();
-                    var alamat= $('#alamat').val();
-                    var no_hp= $('#no_hp').val();
-                    var ttl= $('#ttl').val();
-                    var tgl= $('#tgl').val();
+                    var id = $('#id_user').val();
+                    var username = $('#username').val();
+                    var password= $('#password').val();
+                    var level = $('#level').val();
                     $.ajax({
                         type: "POST",
-                        url: '<?php echo base_url('admin/admin/tambah_penghuni')?>',
-                        url: '<?php echo base_url('admin/superadmin/tambah_penghuni')?>',
+                        url: '<?php echo base_url('admin/superadmin/tambah_user')?>',
                                                 
                         data:{
-                            lantai:lantai ,
-                            no_kamar:no_kamar ,
-                            nama_depan:nama_depan ,
-                            nama_belakang:nama_belakang ,
-                            no_ktp:no_ktp ,
-                            plat:plat ,
-                            alamat:alamat ,
-                            no_hp:no_hp ,
-                            ttl:ttl ,
-                            tgl:tgl
+                            id_user:id_user ,
+                            username:username ,
+                            password:password ,
+                            level:level ,
                         },
                         success:function(data)
                         {
@@ -89,7 +61,7 @@
                             swal(
                                 {
                                     title: 'Selesai!',
-                                    text: 'Berhasil Menambahkan Penghuni!',
+                                    text: 'Berhasil Menambahkan User!',
                                     type: 'success',
                                     confirmButtonColor: '#4fa7f3',
                                     allowOutsideClick: false
@@ -107,35 +79,26 @@
                               title: 'Oops...',
                               text: 'Lengkapi form yang ada!',
                               showConfirmButton: true,
-                              footer: 'Gagal Menambahkan Penghuni'
+                              footer: 'Gagal Menambahkan User'
                             })
                         }
                     })
                 });
                             
                     //GET UPDATE
-                    $('button.edit_penghuni').click(function() {
+                    $('button.edit_user').click(function() {
                         var id= $(this).attr("data");
                         $.ajax({
                             type : "GET",
-                            url  : "<?php echo base_url('admin/admin/lihat_penghuni')?>",
-                            url  : "<?php echo base_url('admin/superadmin/lihat_penghuni')?>",
+                            url  : "<?php echo base_url('admin/superadmin/lihat_user')?>",
                             dataType : "JSON" ,
                             data : {id:id},
                             success: function(data){
                                 
-                                    $('#modaledit_penghuni').modal('show');
-                                    $('[name="id_penghuni"]').val(data.id_penghuni);
-                                    $('[name="nama_depan_edit"]').val(data.nama_depan);
-                                    $('[name="nama_belakang_edit"]').val(data.nama_belakang);
-                                    $('[name="alamat_edit"]').val(data.alamat);
-                                    $('[name="lantai_edit"]').val(data.lantai);
-                                    $('[name="no_kamar_edit"]').val(data.no_kamar);
-                                    $('[name="plat_nomor_edit"]').val(data.plat_nomor);
-                                    $('[name="no_ktp_edit"]').val(data.no_ktp);
-                                    $('[name="no_hp_edit"]').val(data.no_telp);
-                                    $('[name="ttl_edit"]').val(data.tempat_lahir);
-                                    $('[name="tgl_edit"]').val(data.tanggal_lahir);
+                                    $('#modaledit_user').modal('show');
+                                    $('[name="username_edit"]').val(data.username);
+                                    $('[name="password_edit"]').val(data.password);
+                                    $('[name="level_edit"]').val(data.level);
                                 
                             }
                         });
@@ -143,36 +106,19 @@
                     });
 
                     //edit penghuni
-                    $("#form_edit_penghuni").submit(function(e){
+                    $("#form_edit_user").submit(function(e){
                     e.preventDefault();
-                        var id = $('#id_penghuni').val();
-                        var lantai = $('#lantai_edit').val();
-                        var no_kamar= $('#no_kamar_edit').val();
-                        var nama_depan = $('#nama_depan_edit').val();
-                        var nama_belakang= $('#nama_belakang_edit').val();
-                        var no_ktp= $('#no_ktp_edit').val();
-                        var plat= $('#plat_nomor_edit').val();
-                        var alamat= $('#alamat_edit').val();
-                        var no_hp= $('#no_hp_edit').val();
-                        var ttl= $('#ttl_edit').val();
-                        var tgl= $('#tgl_edit').val();  
+                        var username = $('#username_edit').val();
+                        var password = $('#password_edit').val();
+                        var level = $('#level_edit').val(); 
                         $.ajax({
                             type: "POST",
-                            url: '<?php echo base_url('admin/admin/update_penghuni')?>',
-                            url: '<?php echo base_url('admin/superadmin/update_penghuni')?>',
+                            url: '<?php echo base_url('admin/superadmin/update_user')?>',
                                                     
                             data:{
-                                id_penghuni : id_penghuni ,
-                                lantai:lantai ,
-                                no_kamar:no_kamar ,
-                                nama_depan:nama_depan ,
-                                nama_belakang:nama_belakang ,
-                                no_ktp:no_ktp ,
-                                plat:plat ,
-                                alamat:alamat ,
-                                no_hp:no_hp ,
-                                ttl:ttl ,
-                                tgl:tgl
+                                username:username ,
+                                password:password ,
+                                level:level ,
                             },
                             success:function(data)
                             {
@@ -180,7 +126,7 @@
                                 swal(
                                     {
                                         title: 'Selesai!',
-                                        text: 'Berhasil Edit Data Penghuni!',
+                                        text: 'Berhasil Edit Data User!',
                                         type: 'success',
                                         confirmButtonColor: '#4fa7f3',
                                         allowOutsideClick: false
@@ -198,34 +144,33 @@
                                   title: 'Oops...',
                                   text: 'Lengkapi form yang ada!',
                                   showConfirmButton: true,
-                                  footer: 'Gagal Menambahkan Penghuni'
+                                  footer: 'Gagal Menambahkan User'
                                 })
                             }
                         })
                     });
 
-                $('button.delete_penghuni').click(function() {
+                $('button.delete_user').click(function() {
                     var id = $(this).attr("data");
-                    deletepenghuni(id);
+                    deleteuser(id);
                   });
 
-                  function deletepenghuni(id) {
+                  function deleteuser(id) {
                     swal({
                       title: "Apakah anda yakin?", 
-                      text: "Anda akan menghapus penghuni ini dari database kosan", 
+                      text: "Anda akan menghapus user ini dari database kosan", 
                       type: "warning",
                       showCancelButton: true,
-                      confirmButtonText:"Ya, Hapus penghuni!",
+                      confirmButtonText:"Ya, Hapus user!",
                       confirmButtonColor:"#ec6c62"
                     }).then(function() {
                       $.ajax({
-                        url: "<?php echo base_url('admin/admin/delete_penghuni')?>",
-                        url: "<?php echo base_url('admin/superadmin/delete_penghuni')?>",
+                        url: "<?php echo base_url('admin/superadmin/delete_user')?>",
                         type: "POST",
                         dataType:"JSON",
-                        data: {id_penghuni:id},
+                        data: {id_user:id},
                         success: function(data){
-                            swal("Deleted!", "Data penghuni berhasil dihapus!", "success").then(function(){
+                            swal("Deleted!", "Data user berhasil dihapus!", "success").then(function(){
                                 location.reload();
                             });
                         },
