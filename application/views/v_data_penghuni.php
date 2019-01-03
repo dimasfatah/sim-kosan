@@ -34,7 +34,7 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-info waves-effect waves-light">Tambahkan</button>                                                 
+                                                    <button type="button" class="btn btn-info waves-effect waves-light" onclick="simpan()">Tambahkan</button>                                                 
                                                 </div>
                                                 <?php echo form_close(); ?>  
                                             </div>
@@ -58,7 +58,7 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-info waves-effect waves-light">Tambahkan</button>                                                 
+                                                    <button type="button" class="btn btn-info waves-effect waves-light" onclick="simpan()">Tambahkan</button>                                                 
                                                 </div>
                                                 <?php echo form_close(); ?>  
                                             </div>
@@ -71,7 +71,7 @@
                             <div class="col-12">
                                 <div class="card-box table-responsive">
                                     <h4 class="m-t-0 header-title"><b>Data Penghuni</b></h4>
-                                    <button type="button" data-toggle="modal" data-target="#modaltambah" class="btn btn-custom waves-light waves-effect w-md"> Tambah </button>
+                                    <button type="button" data-toggle="modal" data-target="#modaltambah" onclick="tambah()" class="btn btn-custom waves-light waves-effect w-md"> Tambah </button>
                                     <br>
                                     <table id="datatable" class="table table-bordered">
                                         <thead>
@@ -99,7 +99,7 @@
                                             <td><?php echo $row->plat_nomor ?></td>
                                             <td><?php echo $row->no_ktp ?></td>
                                             <td style="text-align:right;">
-                                            <a><button type="button" class="btn btn-info btn-xs edit_penghuni" data="<?php echo $row->id_penghuni ?>">Edit</button></a>
+                                            <a><button type="button" class="btn btn-info btn-xs edit_penghuni" onclick="edit()" data="<?php echo $row->id_penghuni ?>">Edit</button></a>
                                             <a><button type="button" class="btn btn-danger btn-xs delete_penghuni" data="<?php echo $row->id_penghuni ?>" >Hapus</button></a>
                                             </td>
                                         </tr>

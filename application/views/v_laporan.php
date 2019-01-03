@@ -27,7 +27,7 @@
                                         <div class="col-sm-12">
                                             <br>
 
-                                            <form class="form-inline" role="form">
+                                            <?php echo form_open('',array('id'=>'form_cetak_laporan','class'=>'form-inline')); ?>
                                                 <div class="form-group">
                                                     <label class="sr-only" for="exampleInputEmail21">Bulan</label>
                                                     <select id="bulan" name="bulan" class="form-control input-sm" required>
@@ -46,9 +46,9 @@
                                                             <option value="12" >Desember</option>
                                                     </select>
                                                 </div>
-
+                                                
                                                 <div class="form-group m-l-10">
-                                                    <label class="sr-only" for="exampleInputPassword2">Password</label>
+                                                    <label class="sr-only" for="tahun">Tahun</label>
                                                     <select id="tahun" name="tahun" class="form-control input-sm" required>
                                                             <option value=""> Tahun</option>
                                                             <?php
@@ -70,8 +70,16 @@
                                                             
                                                         </select>
                                                 </div>
+                                                <div class="form-group m-l-10">
+                                                    <label class="sr-only" for="format">Format</label>
+                                                    <select id="format" name="format" class="form-control input-sm" required>
+                                                            <option value=""> Format</option>                        
+                                                            <option value="PDF" >PDF</option>
+                                                            <option value="Excel" >Excel</option>
+                                                    </select>
+                                                </div>
                                                 <button type="submit" class="btn btn-danger waves-effect waves-light m-l-10 btn-md">Cetak</button>
-                                            </form>
+                                            <?php echo form_close(); ?>
                                         </div>
                                     </div>
                                 </div>
@@ -98,7 +106,7 @@
                                         </thead>
                                         <div class="form-inline m-b-20">
                                             <div class="row">
-                                                <div class="col-md-6 text-xs-center">
+                                                <div class="col-md-4 text-xs-center">
                                                     <div class="form-group">
                                                         <label class="control-label m-r-5">Bulan</label>
                                                         <select id="footable-status" class="form-control input-sm">
@@ -117,15 +125,43 @@
                                                             <option value="desember" >Desember</option>
                                                         </select>
                                                     </div>
-
+                                                </div>
+                                                <div class="col-md-4 text-xs-center">
+                                                    <div class="form-group">
+                                                        <label class="control-label m-r-5">Tahun</label>
+                                                        <select id="footable-tahun" class="form-control input-sm">
+                                                        <option value=""> Show all</option>
+                                                        <?php
+                                                                    foreach ($year as $low){
+                                                                        if (empty($low->tanggal_pemasukan)&&empty($low->tanggal_pembayaran)) {
+                                                                            $date=$low->tanggal_kredit;
+                                                                            }elseif (empty($low->tanggal_pemasukan)&&empty($low->tanggal_kredit)) {
+                                                                            $date=$low->tanggal_pembayaran;
+                                                                            }else{
+                                                                            $date=$low->tanggal_pemasukan;
+                                                                            }
+                                                                        $array=explode("-",$date);
+                                                                        $year=$array[0];        
+                                                                ?>    
+                                                            <option value="<?php echo $year?>"><?php echo $year?></option>   
+                                                            <?php
+                                                                }
+                                                        ?>
+                                                        </select>
+                                                    </div>
                                                 </div>                                                
-                                                <div class="col-md-6 text-center text-right">
-                                                    <div class="form-group float-right">
+                                                <div class="col-md-4 text-right ">
+                                                    <div class="form-group ">
                                                         <input id="footable-search" type="text" placeholder="Search" class="form-control" autocomplete="on">
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="form-inline m-b-20">
+                                            <div class="row">
+                                            
+                                            </div>
+                                        </div>    
                                         <tbody>
                                             </tr>
                                         <?php 
@@ -191,6 +227,15 @@
 
                                             
                                         </tbody>
+                                        <tfoot>
+                                        <tr class="active">
+                                            <td colspan="5">
+                                                <div class="text-right">
+                                                    <ul class="pagination pagination-split footable-pagination m-t-10 m-b-0"></ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tfoot>
                                     </table>
                                 </div>
                             </div>

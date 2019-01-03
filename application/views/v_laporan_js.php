@@ -12,6 +12,8 @@
         <script src="<?php echo base_url('plugins/datatables/buttons.html5.min.js')?>"></script>
         <script src="<?php echo base_url('plugins/datatables/buttons.print.min.js')?>"></script>
         <script src="<?php echo base_url('plugins/datatables/buttons.colVis.min.js')?>"></script>
+        <!-- Sweet-Alert  -->
+        <script src="<?php echo base_url('plugins/sweet-alert2/sweetalert2.min.js')?>"></script>
 
         
         <script>
@@ -31,20 +33,49 @@
 				filtering.trigger('footable_filter', {filter: $(this).val()});
 			});
 
+            $('#footable-tahun').change(function (e) {
+				e.preventDefault();
+				filtering.trigger('footable_filter', {filter: $(this).val()});
+			});
+
 			// Search input
 			$('#footable-search').on('input', function (e) {
 				e.preventDefault();
 				filtering.trigger('footable_filter', {filter: $(this).val()});
 			});
 
-			var table = $('#footable').DataTable({
-                    lengthChange: false,
-                    bFilter: false,
-                    buttons: ['copy', 'excel', 'pdf']
-                });
-
-                table.buttons().container()
-                        .appendTo('#footable_wrapper .col-md-6:eq(0)');
+			
+            $("#form_cetak_laporan").submit(function(e){
+                    e.preventDefault();
+                    var bulan = $('#bulan').val();
+                    var tahun= $('#tahun').val();
+                    var format=$('#format').val();
+                    $.ajax({
+                        type: "POST",
+                        url: '<?php echo base_url('admin/admin/pdf_laporan')?>',
+                                                
+                        data:{
+                            bulan :bulan ,
+                            tahun :tahun ,
+                            format:format   
+                        },
+                        success:function(data)
+                        {
+                            document.getElementById('form_cetak_laporan').reset();   
+                        },
+                        error:function()
+                        {
+                            //alert('error');
+                            swal({
+                              type: 'error',
+                              title: 'Oops...',
+                              text: 'Lengkapi form yang ada!',
+                              showConfirmButton: true,
+                              footer: 'Gagal cetak laporan'
+                            })
+                        }
+                    })
+                });            
 		});
 
         </script>

@@ -77,8 +77,7 @@
                         </li>
                         <li class="hide-phone app-search">
                             <form role="search" class="">
-                                <input type="text" placeholder="Search..." class="form-control">
-                                <a href=""><i class="fa fa-search"></i></a>
+                                <input type="text" disabled placeholder="<?php echo date("l,d-m-Y");?>" class="form-control">
                             </form>
                         </li>
                     </ul>

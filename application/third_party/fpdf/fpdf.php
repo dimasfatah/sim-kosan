@@ -359,7 +359,8 @@ function AddPage($orientation='', $size='', $rotation=0)
 
 function Header()
 {
-	// To be implemented in your own inherited class
+	
+
 }
 
 function Footer()

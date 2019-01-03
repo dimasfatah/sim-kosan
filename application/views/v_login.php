@@ -1,114 +1,120 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-	<title>LOGIN PAGE</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-<!--===============================================================================================-->	
-	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/vendor/bootstrap/css/bootstrap.min.css')?>">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css')?>">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/fonts/iconic/css/material-design-iconic-font.min.css')?>">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/vendor/animate/animate.css')?>">
-<!--===============================================================================================-->	
-	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/vendor/css-hamburgers/hamburgers.min.css')?>">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/vendor/animsition/css/animsition.min.css')?>">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/vendor/select2/select2.min.css')?>">
-<!--===============================================================================================-->	
-	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/vendor/daterangepicker/daterangepicker.css')?>">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/util.css')?>">
-	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/main.css')?>">
-<!--===============================================================================================-->
-</head>
-<body>
-	
-	<div class="limiter">
-		<div class="container-login100">
-			<div class="wrap-login100 p-t-85 p-b-20">
-				<form class="login100-form validate-form" method="post" action="<?php echo base_url('auth/login'); ?>" role="login">
-					<span class="login100-form-title p-b-70">
-						Welcome
-					</span>
-					<span class="login100-form-avatar">
-						<img src="<?php echo base_url('assets/images/avatar-01.jpg')?>" alt="AVATAR">
-					</span>
-						<?php
-				      	//menampilkan error menggunakan alert javascript
-				        if(isset($error)){
-				        echo '<script>
-				        alert("'.$error.'");
-				        </script>';
-				        }
-				      	?>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Login - SIMKOSAN</title>
+        
 
-					<div class="wrap-input100 validate-input m-t-85 m-b-35" data-validate = "Enter username">
-						<input class="input100" type="text" name="username">
-						<span class="focus-input100" data-placeholder="Username"></span>
-					</div>
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="<?php echo base_url('assets/images/favicon.ico')?>">
 
-					<div class="wrap-input100 validate-input m-b-50" data-validate="Enter password">
-						<input class="input100" type="password" name="password">
-						<span class="focus-input100" data-placeholder="Password"></span>
-					</div>
+        <!-- App css -->
+        <link href="<?php echo base_url('assets/css/bootstrap.min.css" rel="stylesheet" type="text/css')?>" />
+        <link href="<?php echo base_url('assets/css/icons.css" rel="stylesheet" type="text/css')?>" />
+        <link href="<?php echo base_url('assets/css/metismenu.min.css" rel="stylesheet" type="text/css')?>" />
+        <link href="<?php echo base_url('assets/css/style.css" rel="stylesheet" type="text/css')?>" />
 
-					<div class="container-login100-form-btn">
-						<button class="login100-form-btn" name="submit" type="submit" value="login">
-							Login
-						</button>
-					</div>
+        <script src="<?php echo base_url('assets/js/modernizr.min.js')?>"></script>
 
-					<ul class="login-more p-t-190">
-						<li class="m-b-8">
-							<span class="txt1">
-								Forgot
-							</span>
+    </head>
 
-							<a href="#" class="txt2">
-								Username / Password?
-							</a>
-						</li>
 
-						<li>
-							<span class="txt1">
-								Don’t have an account?
-							</span>
+    <body class="bg-accpunt-pages">
+    <img src="<?php echo base_url('assets/images/bg-profile.png')?>" alt="" height="30">
 
-							<a href="#" class="txt2">
-								Sign up
-							</a>
-						</li>
-					</ul>
-				</form>
-			</div>
-		</div>
-	</div>
-	
+        <!-- HOME -->
+        <section>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
 
-	<div id="dropDownSelect1"></div>
-	
-<!--===============================================================================================-->
-	<script src="<?php echo base_url('assets/vendor/jquery/jquery-3.2.1.min.js')?>"></script>
-<!--===============================================================================================-->
-	<script src="<?php echo base_url('assets/vendor/animsition/js/animsition.min.js')?>"></script>
-<!--===============================================================================================-->
-	<script src="<?php echo base_url('assets/vendor/bootstrap/js/popper.js')?>"></script>
-	<script src="<?php echo base_url('assets/vendor/bootstrap/js/bootstrap.min.js')?>"></script>
-<!--===============================================================================================-->
-	<script src="<?php echo base_url('assets/vendor/select2/select2.min.js')?>"></script>
-<!--===============================================================================================-->
-	<script src="<?php echo base_url('assets/vendor/daterangepicker/moment.min.js')?>"></script>
-	<script src="<?php echo base_url('assets/vendor/daterangepicker/daterangepicker.js')?>"></script>
-<!--===============================================================================================-->
-	<script src="<?php echo base_url('assets/vendor/countdowntime/countdowntime.js')?>"></script>
-<!--===============================================================================================-->
-	<script src="<?php echo base_url('assets/js/main.js')?>"></script>
+                        <div class="wrapper-page">
 
-</body>
+                            <div class="account-pages">
+                                <div class="account-box">
+                                    <div class="account-logo-box">
+                                        <h2 class="text-uppercase text-center">
+                                            <a href="index.html" class="text-success">
+                                                <span><img src="<?php echo base_url('assets/images/logo_dark.png')?>" alt="" height="30"></span>
+                                            </a>
+                                        </h2>
+                                        <h5 class="text-uppercase font-bold m-b-5 m-t-50">Sign In</h5>
+                                        <p class="m-b-0">Login to your Admin account</p>
+                                    </div>
+                                    <div class="account-content">
+                                        <form class="form-horizontal" method="post" action="<?php echo base_url('auth/login'); ?>" role="login" >
+                                        <?php
+                                            //menampilkan error menggunakan alert javascript
+                                            if(isset($error)){
+                                            echo '<script>
+                                            alert("'.$error.'");
+                                            </script>';
+                                            }
+                                        ?>
+
+                                            <div class="form-group m-b-20 row">
+                                                <div class="col-12">
+                                                    <label for="username">Username</label>
+                                                    <input class="form-control" type="text" name="username" required placeholder="Username">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row m-b-20">
+                                                <div class="col-12">
+                                                    
+                                                    <label for="password">Password</label>
+                                                    <input class="form-control" type="password" name="password" required placeholder="Enter your password">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row m-b-20">
+                                                <div class="col-12">
+
+                                                    
+
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row text-center m-t-10">
+                                                <div class="col-12">
+                                                    <button class="btn btn-md btn-block btn-primary waves-effect waves-light" name="submit" type="submit" value="login">Sign In</button>
+                                                </div>
+                                            </div>
+
+                                        </form>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end card-box-->
+
+
+                        </div>
+                        <!-- end wrapper -->
+
+                    </div>
+                </div>
+            </div>
+          </section>
+          <!-- END HOME -->
+
+
+
+        <script>
+            var resizefunc = [];
+        </script>
+
+        <!-- jQuery  -->
+        <script src="<?php echo base_url('assets/js/jquery.min.js');?>"></script>
+        <script src="<?php echo base_url('assets/js/tether.min.js');?>"></script><!-- Tether for Bootstrap -->
+        <script src="<?php echo base_url('assets/js/bootstrap.min.js');?>"></script>
+        <script src="<?php echo base_url('assets/js/metisMenu.min.js');?>"></script>
+        <script src="<?php echo base_url('assets/js/waves.js');?>"></script>
+        <script src="<?php echo base_url('assets/js/jquery.slimscroll.js');?>"></script>
+
+        <!-- App js -->
+        <script src="<?php echo base_url('assets/js/jquery.core.js');?>"></script>
+        <script src="<?php echo base_url('assets/js/jquery.app.js');?>"></script>
+
+    </body>
 </html>

@@ -85,19 +85,19 @@ Class Admin extends MY_Controller{
  	}
  	public function update_penghuni(){
  		$id=$this->input->post('id_penghuni');
- 		$lantai=$this->input->post('lantai');
- 		$no_kamar=$this->input->post('no_kamar');
+ 		$lantai=$this->input->post('lantai_edit');
+ 		$no_kamar=$this->input->post('no_kamar_edit');
  		$query = $this->m_admin->cari_id_kamar($lantai,$no_kamar);
  		$data = array(
 			'id_kamar' => $query->id_kamar,
-			'nama_depan' => $this->input->post('nama_depan'),
-			'nama_belakang' => $this->input->post('nama_belakang'),
-			'no_ktp' => $this->input->post('no_ktp'),
-			'plat_nomor'=>$this->input->post('plat'),
-			'alamat'=>$this->input->post('alamat'),
-			'no_telp'=>$this->input->post('no_hp'),
-			'tempat_lahir'=>$this->input->post('ttl'),
-			'tanggal_lahir'=>$this->input->post('tgl'),
+			'nama_depan' => $this->input->post('nama_depan_edit'),
+			'nama_belakang' => $this->input->post('nama_belakang_edit'),
+			'no_ktp' => $this->input->post('no_ktp_edit'),
+			'plat_nomor'=>$this->input->post('plat_nomor_edit'),
+			'alamat'=>$this->input->post('alamat_edit'),
+			'no_telp'=>$this->input->post('no_hp_edit'),
+			'tempat_lahir'=>$this->input->post('ttl_edit'),
+			'tanggal_lahir'=>$this->input->post('tgl_edit'),
 		);
 		$this->db->where('id_penghuni',$id);
 		$this->db->update('tb_penghuni',$data);
@@ -300,6 +300,7 @@ Class Admin extends MY_Controller{
 	}
 	public function laporan(){
 		$data['tahun']=$this->m_admin->get_laporan_year()->result();
+		$data['year']=$this->m_admin->get_laporan_year()->result();
 		$data['data']=$this->m_admin->ambil_laporan()->result();
 
 		$this->load->view('v_topbar');
@@ -311,24 +312,156 @@ Class Admin extends MY_Controller{
 	}
 	public function pdf_laporan(){
 		$this->load->library('pdf');
-		$pdf = new FPDF('l','mm','A5');
+
+		
+		
+		$bulan=$this->input->post('bulan');
+		$tahun=$this->input->post('tahun');
+		$format=$this->input->post('format');
+		$data=$this->m_admin->print_laporan($tahun,$bulan)->result();
+
+		if($format=="PDF"){
+		$pdf = new FPDF();
         // membuat halaman baru
-        $pdf->AddPage();
+        $pdf->AddPage('P','A4',0);
         // setting jenis font yang akan digunakan
-        $pdf->SetFont('Arial','B',16);
-        // mencetak string 
-        $pdf->Cell(190,7,'SEKOLAH MENENGAH KEJURUSAN NEEGRI 2 LANGSA',0,1,'C');
-        $pdf->SetFont('Arial','B',12);
-        $pdf->Cell(190,7,'DAFTAR SISWA KELAS IX JURUSAN REKAYASA PERANGKAT LUNAK',0,1,'C');
+        $pdf->SetFont('Arial','B',14);
+		// mencetak string
+		//$pdf->image(base_url('assets/images/logo_sm.png'),9,6); 
+        $pdf->Cell(0,7,'LAPORAN KEUANGAN DHIMAS JAYA KOS',0,1,'C');
+		$pdf->SetFont('Arial','B',12);
+		$bulan_tahun="Bulan ".$bulan." Tahun ".$tahun;
+        $pdf->Cell(0,5,$bulan_tahun,0,1,'C');
         // Memberikan space kebawah agar tidak terlalu rapat
-        $pdf->Cell(10,7,'',0,1);
-        $pdf->SetFont('Arial','B',10);
-        $pdf->Cell(20,6,'NIM',1,0);
-        $pdf->Cell(85,6,'NAMA MAHASISWA',1,0);
-        $pdf->Cell(27,6,'NO HP',1,0);
-        $pdf->Cell(25,6,'TANGGAL LHR',1,1);
-        $pdf->SetFont('Arial','',10);
-        $pdf->Output();
+		$pdf->Cell(10,7,'','B',1,'C');
+		//head table
+        $pdf->SetFont('Times','B',12);
+        $pdf->Cell(15,10,'NO',1,0,'C');
+        $pdf->Cell(60,10,'Keterangan',1,0,'C');
+        $pdf->Cell(40,10,'Debet',1,0,'C');
+		$pdf->Cell(40,10,'Kredit',1,0,'C');
+		$pdf->Cell(0,10,'Tanggal',1,1,'C');
+		//isi table
+		$pdf->SetFont('Times','',12);
+		$no=1;
+		$tkredit=0.00;
+		$tdebit=0.00;
+		foreach($data as $row){
+			if (empty($row->keterangan_pemasukan)&&empty($row->keterangan_pembayaran)) {
+				$keterangan=$row->keterangan_kredit;
+				}elseif (empty($row->keterangan_pemasukan)&&empty($row->keterangan_kredit)) {
+				$keterangan=$row->keterangan_pembayaran;
+				}else{
+				$keterangan=$row->keterangan_pemasukan;
+				}
+			if (empty($row->tanggal_pemasukan)&&empty($row->tanggal_pembayaran)) {
+				$tanggal=$row->tanggal_kredit;
+				}elseif (empty($row->tanggal_pemasukan)&&empty($row->tanggal_kredit)) {
+				$tanggal=$row->tanggal_pembayaran;
+				}else{
+				$tanggal=$row->tanggal_pemasukan;
+				}
+				
+			if (empty($row->debit_pemasukan)&&empty($row->debit_pembayaran)) {
+				$debit= "-"; 
+				} elseif (empty($row->debit_pembayaran)) {
+					$debit= $row->debit_pemasukan;
+					$tdebit += $debit;
+				} else{
+					$debit= $row->debit_pembayaran;
+					$tdebit += $debit;
+				}
+		
+			if (empty($row->kredit)) {
+				$kredit= "-";
+				}
+			  	else{
+				$kredit= $row->kredit;
+				$tkredit += $kredit;
+				}
+			
+		//tambah
+				   
+		//isi CELL
+			$pdf->Cell(15,10,$no,1,0,'C');
+			$pdf->Cell(60,10,$keterangan,1,0);
+			$pdf->Cell(40,10,$debit,1,0);
+			$pdf->Cell(40,10,$kredit,1,0);
+			$pdf->Cell(0,10,$tanggal,1,1,'C');
+			
+				
+			$no++;
+		}
+		$pdf->Cell(75,10,'Total',1,0,'C');
+		$pdf->Cell(40,10,$tdebit,1,0);
+		$pdf->Cell(40,10,$tkredit,1,0);
+        $format="Laporan".$bulan."th ".$tahun;
+		$pdf->Output('I',$format);
+	
+		}
+		else{
+			header("Content-type:application/vnd-ms-excel");
+			header("Content-Disposition: attachment; filename=Laporan");
+			echo "<table align='center' cellspacing='0px' border='1px'>
+			<tr>
+			<th>No</th> 
+            <th>Keterangan</th>
+            <th>Debet</th>
+            <th>Kredit</th>
+			<th>Tanggal Transaksi</th>
+			</tr>
+			";
+			$no=1;
+		$tkredit=0.00;
+		$tdebit=0.00;
+		foreach($data as $row){
+			if (empty($row->keterangan_pemasukan)&&empty($row->keterangan_pembayaran)) {
+				$keterangan=$row->keterangan_kredit;
+				}elseif (empty($row->keterangan_pemasukan)&&empty($row->keterangan_kredit)) {
+				$keterangan=$row->keterangan_pembayaran;
+				}else{
+				$keterangan=$row->keterangan_pemasukan;
+				}
+			if (empty($row->tanggal_pemasukan)&&empty($row->tanggal_pembayaran)) {
+				$tanggal=$row->tanggal_kredit;
+				}elseif (empty($row->tanggal_pemasukan)&&empty($row->tanggal_kredit)) {
+				$tanggal=$row->tanggal_pembayaran;
+				}else{
+				$tanggal=$row->tanggal_pemasukan;
+				}
+				
+			if (empty($row->debit_pemasukan)&&empty($row->debit_pembayaran)) {
+				$debit= "-"; 
+				} elseif (empty($row->debit_pembayaran)) {
+					$debit= $row->debit_pemasukan;
+					$tdebit += $debit;
+				} else{
+					$debit= $row->debit_pembayaran;
+					$tdebit += $debit;
+				}
+		
+			if (empty($row->kredit)) {
+				$kredit= "-";
+				}
+			  	else{
+				$kredit= $row->kredit;
+				$tkredit += $kredit;
+				}
+			
+		echo "
+			<tr>
+			<th>No</th> 
+			<th>Keterangan</th>
+			<th>Debet</th>
+			<th>Kredit</th>
+			<th>Tanggal Transaksi</th>
+			</tr>
+			";
+			$no++;	
+
+		}
+		echo"</table>";
+		}
     }
 	
 
