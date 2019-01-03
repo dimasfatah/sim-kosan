@@ -67,6 +67,7 @@
                     $.ajax({
                         type: "POST",
                         url: '<?php echo base_url('admin/admin/tambah_kamar')?>',
+                        url: '<?php echo base_url('admin/superadmin/tambah_kamar')?>',
                                                 
                         data:{
                             lantai:lantai ,
@@ -121,6 +122,7 @@
                       console.log(id);  
                       $.ajax({
                         url: "<?php echo base_url('admin/admin/ubah_status_kamar')?>",
+                        url: "<?php echo base_url('admin/superadmin/ubah_status_kamar')?>",
                         type: "POST",
                         data: {id:id},
                         success: function(data){

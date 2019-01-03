@@ -2,7 +2,8 @@
             $('select[name="lantai"]').on('change', function(){
                 $.ajax({
                     type : 'POST', 
-                    url  : '<?php echo base_url('admin/admin/nokamar_kosong'); ?>', 
+                    url  : '<?php echo base_url('admin/admin/nokamar_kosong'); ?>',
+                    url  : '<?php echo base_url('admin/superadmin/nokamar_kosong'); ?>', 
                     data : {
                         lantai: $(this).val()
                     }, 
@@ -77,6 +78,7 @@
                     $.ajax({
                         type: "POST",
                         url: '<?php echo base_url('admin/admin/tambah_tagihan')?>',
+                        url: '<?php echo base_url('admin/superadmin/tambah_tagihan')?>',
                                                 
                         data:{
                             lantai:lantai ,

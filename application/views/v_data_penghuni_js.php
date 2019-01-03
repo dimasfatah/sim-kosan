@@ -2,7 +2,8 @@
             $('select[name="lantai"]').on('change', function(){
                 $.ajax({
                     type : 'POST', 
-                    url  : '<?php echo base_url('admin/admin/nokamar'); ?>', 
+                    url  : '<?php echo base_url('admin/admin/nokamar'); ?>',
+                    url  : '<?php echo base_url('admin/superadmin/nokamar'); ?>', 
                     data : {
                         lantai: $(this).val()
                     }, 
@@ -59,7 +60,69 @@
                 });
                 //parsley        
                 //$('form').parsley();        
+<<<<<<< HEAD
                 
+=======
+                //tambah penghuni
+                $("#form_tambah_penghuni").submit(function(e){
+                    e.preventDefault();
+                    var lantai = $('#lantai').val();
+                    var no_kamar= $('#no_kamar').val();
+                    var nama_depan = $('#nama_depan').val();
+                    var nama_belakang= $('#nama_belakang').val();
+                    var no_ktp= $('#no_ktp').val();
+                    var plat= $('#plat').val();
+                    var alamat= $('#alamat').val();
+                    var no_hp= $('#no_hp').val();
+                    var ttl= $('#ttl').val();
+                    var tgl= $('#tgl').val();
+                    $.ajax({
+                        type: "POST",
+                        url: '<?php echo base_url('admin/admin/tambah_penghuni')?>',
+                        url: '<?php echo base_url('admin/superadmin/tambah_penghuni')?>',
+                                                
+                        data:{
+                            lantai:lantai ,
+                            no_kamar:no_kamar ,
+                            nama_depan:nama_depan ,
+                            nama_belakang:nama_belakang ,
+                            no_ktp:no_ktp ,
+                            plat:plat ,
+                            alamat:alamat ,
+                            no_hp:no_hp ,
+                            ttl:ttl ,
+                            tgl:tgl
+                        },
+                        success:function(data)
+                        {
+                            $('#modaltambah').modal('hide');
+                            swal(
+                                {
+                                    title: 'Selesai!',
+                                    text: 'Berhasil Menambahkan Penghuni!',
+                                    type: 'success',
+                                    confirmButtonColor: '#4fa7f3',
+                                    allowOutsideClick: false
+                                }
+                            ).then(function(){
+                                location.reload();
+                            })
+                            
+                        },
+                        error:function()
+                        {
+                            //alert('error');
+                            swal({
+                              type: 'error',
+                              title: 'Oops...',
+                              text: 'Lengkapi form yang ada!',
+                              showConfirmButton: true,
+                              footer: 'Gagal Menambahkan Penghuni'
+                            })
+                        }
+                    })
+                });
+>>>>>>> b79588570ef5d878e613aa578ba94a577ebe320e
                             
                     //GET UPDATE
                     $('button.edit_penghuni').click(function() {
@@ -67,6 +130,7 @@
                         $.ajax({
                             type : "GET",
                             url  : "<?php echo base_url('admin/admin/lihat_penghuni')?>",
+                            url  : "<?php echo base_url('admin/superadmin/lihat_penghuni')?>",
                             dataType : "JSON" ,
                             data : {id:id},
                             success: function(data){
@@ -89,6 +153,71 @@
                         return false;
                     });
 
+<<<<<<< HEAD
+=======
+                    //edit penghuni
+                    $("#form_edit_penghuni").submit(function(e){
+                    e.preventDefault();
+                        var id = $('#id_penghuni').val();
+                        var lantai = $('#lantai_edit').val();
+                        var no_kamar= $('#no_kamar_edit').val();
+                        var nama_depan = $('#nama_depan_edit').val();
+                        var nama_belakang= $('#nama_belakang_edit').val();
+                        var no_ktp= $('#no_ktp_edit').val();
+                        var plat= $('#plat_nomor_edit').val();
+                        var alamat= $('#alamat_edit').val();
+                        var no_hp= $('#no_hp_edit').val();
+                        var ttl= $('#ttl_edit').val();
+                        var tgl= $('#tgl_edit').val();  
+                        $.ajax({
+                            type: "POST",
+                            url: '<?php echo base_url('admin/admin/update_penghuni')?>',
+                            url: '<?php echo base_url('admin/superadmin/update_penghuni')?>',
+                                                    
+                            data:{
+                                id_penghuni : id_penghuni ,
+                                lantai:lantai ,
+                                no_kamar:no_kamar ,
+                                nama_depan:nama_depan ,
+                                nama_belakang:nama_belakang ,
+                                no_ktp:no_ktp ,
+                                plat:plat ,
+                                alamat:alamat ,
+                                no_hp:no_hp ,
+                                ttl:ttl ,
+                                tgl:tgl
+                            },
+                            success:function(data)
+                            {
+                                $('#modaltambah').modal('hide');
+                                swal(
+                                    {
+                                        title: 'Selesai!',
+                                        text: 'Berhasil Edit Data Penghuni!',
+                                        type: 'success',
+                                        confirmButtonColor: '#4fa7f3',
+                                        allowOutsideClick: false
+                                    }    
+                                ).then(function(){
+                                    location.reload();
+                                });
+                                
+                            },
+                            error:function()
+                            {
+                                //alert('error');
+                                swal({
+                                  type: 'error',
+                                  title: 'Oops...',
+                                  text: 'Lengkapi form yang ada!',
+                                  showConfirmButton: true,
+                                  footer: 'Gagal Menambahkan Penghuni'
+                                })
+                            }
+                        })
+                    });
+
+>>>>>>> b79588570ef5d878e613aa578ba94a577ebe320e
                 $('button.delete_penghuni').click(function() {
                     var id = $(this).attr("data");
                     deletepenghuni(id);
@@ -105,6 +234,7 @@
                     }).then(function() {
                       $.ajax({
                         url: "<?php echo base_url('admin/admin/delete_penghuni')?>",
+                        url: "<?php echo base_url('admin/superadmin/delete_penghuni')?>",
                         type: "POST",
                         dataType:"JSON",
                         data: {id_penghuni:id},
