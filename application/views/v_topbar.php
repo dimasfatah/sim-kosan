@@ -60,6 +60,9 @@
                                     <h5 class="text-overflow"><small>Welcome ! Admin</small> </h5>
                                 </div>
                                 <!-- item-->
+                                <a href="<?php echo base_url('admin/admin/ganti_password')?>"class="dropdown-item notify-item">
+                                    <i class="zmdi zmdi-power"></i> <span>Ganti Password</span>
+                                </a>
                                 <a href="<?php echo base_url('auth/logout')?>" class="dropdown-item notify-item">
                                     <i class="zmdi zmdi-power"></i> <span>Keluar</span>
                                 </a>
@@ -86,6 +89,7 @@
 
             </div>
             <!-- Top Bar End -->
+                                    
 
 
             <!-- ========== Left Sidebar Start ========== -->
@@ -143,4 +147,6 @@
                 <!-- Sidebar -left -->
 
             </div>
+
+                                    
             <!-- Left Sidebar End -->

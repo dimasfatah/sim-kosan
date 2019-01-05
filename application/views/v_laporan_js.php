@@ -45,7 +45,7 @@
 			});
 
 			
-            $("#form_cetak_laporan").submit(function(e){
+            $("#form_cetak_lapran").submit(function(e){
                     e.preventDefault();
                     var bulan = $('#bulan').val();
                     var tahun= $('#tahun').val();

@@ -59,6 +59,14 @@ Class Admin extends MY_Controller{
  		foreach ($nomor as $r){
 		echo '<option value='.$r->no_kamar.'>'.$r->no_kamar.'</option>'; 
  		}
+	 }
+	 public function nokamar_terisi(){
+		$lantai=$this->input->post('lantai');
+ 		$nomor = $this->m_admin->cari_nomor_terisi($lantai)->result(); 
+ 		echo '<option> Nomor </option>';
+ 		foreach ($nomor as $r){
+		echo '<option value='.$r->no_kamar.'>'.$r->no_kamar.'</option>'; 
+ 		}
  	}
  	public function nokamar_kosong(){
 		$lantai=$this->input->post('lantai');
@@ -67,7 +75,32 @@ Class Admin extends MY_Controller{
  		foreach ($nomor as $r){
 		echo '<option value='.$r->no_kamar.'>'.$r->no_kamar.'</option>'; 
  		}
- 	}
+	}
+
+	public function ganti_password(){
+		$this->load->view('v_topbar');
+ 		$this->load->view('v_form_ganti_password');
+ 		$this->load->view('v_javascript');
+ 		$this->load->view('v_form_ganti_password_js');
+ 		$this->load->view('v_endbar');
+	}
+
+	public function proses_ganti_password(){
+		$password=$this->session->userdata('password');
+		$username=$this->session->userdata('username');
+		$pw_lama=md5($this->input->post('pw_lama'));
+		$pw_baru=md5($this->input->post('pw_baru'));
+		if($password==$pw_lama){
+		$data= array(
+			'username'=>$username,
+			'password'=>$pw_baru,
+			'level'=>$this->session->userdata('level'),
+		);
+		$this->db->where(username,$username);
+		$this->db->update('tb_user',$data);
+		}
+	}
+	 
 
  	public function data_all_penghuni(){
  		$data=$this->m_admin->get_penghuni()->result();
@@ -321,7 +354,7 @@ Class Admin extends MY_Controller{
 		$data=$this->m_admin->print_laporan($tahun,$bulan)->result();
 
 		if($format=="PDF"){
-		$pdf = new FPDF();
+		$pdf = new Mypdf();
         // membuat halaman baru
         $pdf->AddPage('P','A4',0);
         // setting jenis font yang akan digunakan
@@ -383,25 +416,36 @@ Class Admin extends MY_Controller{
 		//tambah
 				   
 		//isi CELL
-			$pdf->Cell(15,10,$no,1,0,'C');
-			$pdf->Cell(60,10,$keterangan,1,0);
-			$pdf->Cell(40,10,$debit,1,0);
-			$pdf->Cell(40,10,$kredit,1,0);
-			$pdf->Cell(0,10,$tanggal,1,1,'C');
-			
+			//$pdf->Cell(15,10,$no,1,0,'C');
+			//$pdf->Cell(60,10,$keterangan,1,0);
+			//$pdf->Cell(40,10,$debit,1,0);
+			//$pdf->Cell(40,10,$kredit,1,0);
+			//$pdf->Cell(0,10,$tanggal,1,1,'C');
+
+			$x=$pdf->GetX();
+			$pdf->mycell(15,10,$x,$no,'C');
+			$x=$pdf->GetX();
+			$pdf->mycell(60,10,$x,$keterangan,'');
+			$x=$pdf->GetX();
+			$pdf->mycell(40,10,$x,$debit,'C');
+			$x=$pdf->GetX();
+			$pdf->mycell(40,10,$x,$kredit,'C');
+			$x=$pdf->GetX();
+			$pdf->mycell(0,10,$x,$tanggal,'C');
+			$pdf->Ln();
 				
 			$no++;
 		}
 		$pdf->Cell(75,10,'Total',1,0,'C');
 		$pdf->Cell(40,10,$tdebit,1,0);
 		$pdf->Cell(40,10,$tkredit,1,0);
-        $format="Laporan".$bulan."th ".$tahun;
-		$pdf->Output('I',$format);
+        $format="Laporan".$bulan."th ".$tahun."pdf";
+		$pdf->Output('D',$format);
 	
 		}
 		else{
 			header("Content-type:application/vnd-ms-excel");
-			header("Content-Disposition: attachment; filename=Laporan");
+			header("Content-Disposition: attachment; filename=Laporan.xls");
 			echo "<table align='center' cellspacing='0px' border='1px'>
 			<tr>
 			<th>No</th> 
@@ -450,16 +494,25 @@ Class Admin extends MY_Controller{
 			
 		echo "
 			<tr>
-			<th>No</th> 
-			<th>Keterangan</th>
-			<th>Debet</th>
-			<th>Kredit</th>
-			<th>Tanggal Transaksi</th>
+			<td>".$no."</td> 
+			<td>".$keterangan."</td>
+			<td>".$debit."</td>
+			<td>".$kredit."</td>
+			<td>".$tanggal."</td>
 			</tr>
 			";
 			$no++;	
 
 		}
+		echo"
+			<tr>
+			<td></td> 
+			<td>Jumlah</td>
+			<td>".$tdebit."</td>
+			<td>".$tkredit."</td>
+			<td></td>
+			</tr>
+		";
 		echo"</table>";
 		}
     }

@@ -6,7 +6,7 @@
             $('select[name="lantai"]').on('change', function(){
                 $.ajax({
                     type : 'POST', 
-                    url  : '<?php echo base_url('admin/admin/nokamar'); ?>', 
+                    url  : '<?php echo base_url('admin/admin/nokamar_terisi'); ?>', 
                     data : {
                         lantai: $(this).val()
                     }, 
@@ -53,7 +53,7 @@
                                     allowOutsideClick: false
                                 }    
                             )
-                            document.getElementById('form_tambah_pengeluaran').reset();
+                            document.getElementById('form_tambah_pembayaran').reset();
                         },
                         error:function()
                         {

@@ -91,7 +91,16 @@ public function cari_nomor_kosong($lantai){
 		 $this->db->from('tb_kamar');
 
 		 return $this->db->get();
- 	} 	
+	 }
+public function cari_nomor_terisi($lantai){
+		$this->db->select('*'); 
+		$this->db->where('lantai', $lantai);
+		$this->db->where('status', 'Terisi'); 
+		$this->db->order_by('no_kamar', 'asc');
+		$this->db->from('tb_kamar');
+
+		return $this->db->get();
+	}	  	
 public function ubah_status_tagihan($id_tagihan,$bulan_akhir){
 		$this->db->set('status',$bulan_akhir);
 		$this->db->where('id_tagihan',$id_tagihan);

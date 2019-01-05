@@ -35,7 +35,7 @@
                                                         <div class="col-md-6">
                                                             <div class="form-group">
                                                                 <label for="noktp" class="control-label">Tagihan per bulan</label>
-                                                                <input data-parsley-type="number"  type="text" class="form-control" id="tagihan" name="tagihan" placeholder="Rp.">
+                                                                <input data-parsley-type="number" required  type="text" class="form-control" id="tagihan" name="tagihan" placeholder="Rp.">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -44,7 +44,7 @@
                                                             <div class="form-group">
                                                                 <label for="batas" class="control-label">Tanggal Pembayaran</label>
                                                                 <select name="batas" class="form-control" id="batas" required>
-                                                                    <option>Pilih</option>
+                                                                    <option value="" >Pilih</option>
                                                                     <?php for ($i=1; $i <= 31 ; $i++) { ?>
                                                                         <option value="<?php echo $i ?>" ><?php echo $i ?></option> 
                                                                     <?php    
