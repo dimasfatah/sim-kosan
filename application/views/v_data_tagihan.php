@@ -33,13 +33,36 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-info waves-effect waves-light">Tambahkan</button>                                                 
+                                                    <button type="button" class="btn btn-info waves-effect waves-light" onclick="simpan()">Tambahkan</button>                                                 
                                                 </div>
                                                 <?php echo form_close(); ?>  
                                             </div>
                                         </div>
                                     </div><!-- /.modal -->
                         <!--modal tambah-->
+                        <!--modal Edit-->
+                        <div id="modaledit_tagihan" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <?php echo form_open('',array('id'=>'form_edit_tagihan')); ?>
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                    <h4 class="modal-title">Edit Jumlah Tagihan</h4>
+                                                </div>
+
+                                                <div class="modal-body">
+                                                <?php $this->load->view('v_formedit_tagihan') ?>
+
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-info waves-effect waves-light" onclick="simpan()">Simpan</button>                                                 
+                                                </div>
+                                                <?php echo form_close(); ?>  
+                                            </div>
+                                        </div>
+                                    </div>
+                        <!-- /.modal -->
                         
 
 
@@ -47,7 +70,7 @@
                             <div class="col-12">
                                 <div class="card-box table-responsive">
                                     <h4 class="m-t-0 header-title"><b>Data Tagihan</b></h4>
-                                    <button type="button" data-toggle="modal" data-target="#modaltambahtagihan" class="btn btn-custom waves-effect w-md"> Tambah </button>
+                                    <button type="button" data-toggle="modal" onclick='tambah()' data-target="#modaltambahtagihan" class="btn btn-custom waves-effect w-md"> Tambah </button>
                                     <br>
                                     <table id="datatable" data-page-size="7" class="table table-bordered">
                                         <thead>
@@ -59,6 +82,7 @@
                                             <th>Jumlah Tagihan</th> 
                                             <th>Batas</th>
                                             <th>Pembayaran Terakhir</th>
+                                            <th>Action</th>
                                             
                                         </thead>
                                         <br>
@@ -105,6 +129,7 @@
                                             <td><?php echo $row->jumlah_tagihan ?></td>
                                             <td><?php echo $row->Batas ?></td>
                                             <td><?php echo $row->status ?></td>
+                                            <td><button type="button" class="btn btn-info btn-xs edit_penghuni" onclick="edit()" data="<?php echo $row->id_tagihan ?>">Edit tagihan</button></td>
                                             
                                         </tr>
                                         <?php $no++;

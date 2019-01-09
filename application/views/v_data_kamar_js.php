@@ -66,8 +66,7 @@
                     var luas_kamar= $('#luas_kamar').val();
                     $.ajax({
                         type: "POST",
-                        url: '<?php echo base_url('admin/admin/tambah_kamar')?>',
-                        url: '<?php echo base_url('admin/superadmin/tambah_kamar')?>',
+                        url: '<?php echo base_url('api/tambah_kamar')?>',
                                                 
                         data:{
                             lantai:lantai ,
@@ -121,8 +120,7 @@
                     }).then(function() {
                       console.log(id);  
                       $.ajax({
-                        url: "<?php echo base_url('admin/admin/ubah_status_kamar')?>",
-                        url: "<?php echo base_url('admin/superadmin/ubah_status_kamar')?>",
+                        url: "<?php echo base_url('api/ubah_status_kamar')?>",
                         type: "POST",
                         data: {id:id},
                         success: function(data){

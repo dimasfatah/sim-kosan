@@ -15,6 +15,7 @@ public function get_laporan(){
 		$this->db->join('tb_pemasukan','tb_pemasukan.id_pemasukan = tb_transaksi.id_pemasukan');
 		$this->db->join('tb_kredit','tb_kredit.id_kredit = tb_transaksi.id_kredit');
 		$this->db->from('tb_transaksi');
+
 		return $this->db->get();
 }	
 public function get_tagihan(){
@@ -27,16 +28,19 @@ public function get_tagihan(){
 public function get_pemasukan(){
 		$this->db->select('tb_pemasukan.*');
 		$this->db->from('tb_pemasukan');
+		$this->db->order_by("tgl_pemasukan", "desc");
 		return $this->db->get();
 }
 public function get_pembayaran(){
 		$this->db->select('tb_pembayaran.*');
 		$this->db->from('tb_pembayaran');
+		$this->db->order_by("tgl_pembayaran", "desc");
 		return $this->db->get();
 }
 public function get_pengeluaran(){
 		$this->db->select('tb_kredit.*');
 		$this->db->from('tb_kredit');
+		$this->db->order_by("tgl_kredit", "desc");
 		return $this->db->get();
 }
 public function get_penghuni_by_id($id){
@@ -47,6 +51,13 @@ public function get_penghuni_by_id($id){
         $query = $this->db->get();
         return $query->row();
 	}
+public function get_tagihan_by_id($id){
+		$this->db->select('tb_tagihan.*');
+        $this->db->where('id_tagihan',$id);
+        $this->db->from('tb_tagihan');
+        $query = $this->db->get();
+        return $query->row();
+	}	
 public function get_kamar_by_id($id){
 		$this->db->select('tb_kamar.*');
         
@@ -157,13 +168,12 @@ public function jumlah_penghuni(){
 		return $query;
 }
 public function ambil_laporan(){
-	$query = $this->db->query("select * from detail_transaksi");
+	$query = $this->db->query("select * from detail_transaksi order by id_transaksi desc");
 	return $query;
 }
 public function get_laporan_year(){
 	$query = $this->db->query("
-	select * from detail_transaksi
-        group by YEAR(tanggal_pemasukan) OR YEAR(tanggal_kredit) OR YEAR(tanggal_pembayaran)
+	select * from detail_transaksi WHERE tanggal_pembayaran is not null group by YEAR(tanggal_pembayaran)
 	");
 	return $query;
 }

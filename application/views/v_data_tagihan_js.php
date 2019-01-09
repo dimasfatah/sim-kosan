@@ -2,8 +2,7 @@
             $('select[name="lantai"]').on('change', function(){
                 $.ajax({
                     type : 'POST', 
-                    url  : '<?php echo base_url('admin/admin/nokamar_kosong'); ?>',
-                    url  : '<?php echo base_url('admin/superadmin/nokamar_kosong'); ?>', 
+                    url  : '<?php echo base_url('api/nokamar_kosong'); ?>',
                     data : {
                         lantai: $(this).val()
                     }, 
@@ -47,6 +46,13 @@
         
         
         <script>
+        var save_method;
+        function tambah(){
+            save_method="tambah";
+        }
+        function edit(){
+            save_method="edit";
+        }
             $(document).ready(function(){
 
                 var filtering = $('#datatable');
@@ -68,54 +74,78 @@
                     filtering.trigger('footable_filter', {filter: $(this).val()});
                 });
 
-                //tambah penghuni
-                $("#form_tambah_tagihan").submit(function(e){
-                    e.preventDefault();
-                    var lantai = $('#lantai').val();
-                    var no_kamar= $('#no_kamar').val();
-                    var tagihan = $('#tagihan').val();
-                    var batas= $('#batas').val();
-                    $.ajax({
-                        type: "POST",
-                        url: '<?php echo base_url('admin/admin/tambah_tagihan')?>',
-                        url: '<?php echo base_url('admin/superadmin/tambah_tagihan')?>',
-                                                
-                        data:{
-                            lantai:lantai ,
-                            no_kamar:no_kamar ,
-                            tagihan:tagihan,
-                            batas:batas
-                        },
-                        success:function(data)
-                        {
-                            $('#modaltambahtagihan').modal('hide');
-                            swal(
-                                {
-                                    title: 'Selesai!',
-                                    text: 'Berhasil Menambahkan Penghuni!',
-                                    type: 'success',
-                                    confirmButtonColor: '#4fa7f3',
-                                    allowOutsideClick: false
-                                }
-                            ).then(function(){
-                                location.reload();
-                            })
-                            
-                        },
-                        error:function()
-                        {
-                            //alert('error');
-                            swal({
-                              type: 'error',
-                              title: 'Oops...',
-                              text: 'Lengkapi form yang ada!',
-                              showConfirmButton: true,
-                              footer: 'Gagal Menambahkan Penghuni'
-                            })
-                        }
-                    })
-                });
+                //GET UPDATE
+                $('button.edit_penghuni').click(function() {
+                        var id= $(this).attr("data");
+                        $.ajax({
+                            type : "GET",
+                            url  : "<?php echo base_url('api/lihat_tagihan')?>",
+                            dataType : "JSON" ,
+                            data : {id:id},
+                            success: function(data){
+                                
+                                    $('#modaledit_tagihan').modal('show');
+                                    $('[name="id_tagihan"]').val(data.id_tagihan);
+                                    $('[name="tagihan_edit"]').val(data.jumlah_tagihan);
+                                    
+                                
+                            }
+                        });
+                        return false;
+                    });
             })
+
+            function simpan(){
+                var url;var form;var modal;var sukses;var gagal;
+                
+                
+                if(save_method == 'tambah') {
+                    url = "<?php echo base_url('api/tambah_tagihan')?>";
+                    form = '#form_tambah_tagihan';
+                    modal='#modaltambahtagihan';
+                    sukses="Berhasil menambahkan tagihan";
+                    gagal="gagal menambahkan tagihan";
+                } else {
+                    url = "<?php echo base_url('api/update_tagihan')?>";
+                    form = '#form_edit_tagihan';
+                    modal='#modaledit_tagihan';
+                    sukses="Berhasil edit tagihan";
+                    gagal="gagal edit tagihan";
+                }
+                //ajax adding
+                $.ajax({
+                url : url,
+                type: "POST",
+                data: $(form).serialize(),
+                success: function(data)
+                            {
+                                $(modal).modal('hide');
+                                swal(
+                                    {
+                                        title: 'Selesai!',
+                                        text: sukses,
+                                        type: 'success',
+                                        confirmButtonColor: '#4fa7f3',
+                                        allowOutsideClick: false
+                                    }    
+                                ).then(function(){
+                                    location.reload();
+                                });
+                                
+                            },
+                            error:function()
+                            {
+                                //alert('error');
+                                swal({
+                                  type: 'error',
+                                  title: 'Oops...',
+                                  text: 'Lengkapi form yang ada!',
+                                  showConfirmButton: true,
+                                  footer: gagal
+                                })
+                            }
+                });
+            }    
         </script>
 
         

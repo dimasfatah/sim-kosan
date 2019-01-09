@@ -23,7 +23,7 @@
                     var tgl_kredit = $('#tgl_pengeluaran').val();
                     $.ajax({
                         type: "POST",
-                        url: '<?php echo base_url('admin/admin/proses_tambah_pengeluaran')?>',
+                        url: '<?php echo base_url('api/proses_tambah_pengeluaran')?>',
                                                 
                         data:{
                             keterangan :keterangan ,

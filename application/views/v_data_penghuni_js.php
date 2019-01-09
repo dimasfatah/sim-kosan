@@ -2,8 +2,7 @@
             $('select[name="lantai"]').on('change', function(){
                 $.ajax({
                     type : 'POST', 
-                    url  : '<?php echo base_url('admin/admin/nokamar'); ?>',
-                    url  : '<?php echo base_url('admin/superadmin/nokamar'); ?>', 
+                    url  : '<?php echo base_url('api/nokamar'); ?>',
                     data : {
                         lantai: $(this).val()
                     }, 
@@ -67,8 +66,7 @@
                         var id= $(this).attr("data");
                         $.ajax({
                             type : "GET",
-                            url  : "<?php echo base_url('admin/admin/lihat_penghuni')?>",
-                            url  : "<?php echo base_url('admin/superadmin/lihat_penghuni')?>",
+                            url  : "<?php echo base_url('api/lihat_penghuni')?>",
                             dataType : "JSON" ,
                             data : {id:id},
                             success: function(data){
@@ -107,8 +105,7 @@
                       confirmButtonColor:"#ec6c62"
                     }).then(function() {
                       $.ajax({
-                        url: "<?php echo base_url('admin/admin/delete_penghuni')?>",
-                        url: "<?php echo base_url('admin/superadmin/delete_penghuni')?>",
+                        url: "<?php echo base_url('api/delete_penghuni')?>",
                         type: "POST",
                         dataType:"JSON",
                         data: {id_penghuni:id},
@@ -131,13 +128,13 @@
                 
                 
                 if(save_method == 'tambah') {
-                    url = "<?php echo base_url('admin/admin/tambah_penghuni')?>";
+                    url = "<?php echo base_url('api/tambah_penghuni')?>";
                     form = '#form_tambah_penghuni';
                     modal='#modaltambah';
                     sukses="Berhasil menambahkan penghuni";
                     gagal="gagal menambahkan penghuni";
                 } else {
-                    url = "<?php echo base_url('admin/admin/update_penghuni')?>";
+                    url = "<?php echo base_url('api/update_penghuni')?>";
                     form = '#form_edit_penghuni';
                     modal='#modaledit_penghuni';
                     sukses="Berhasil edit penghuni";
