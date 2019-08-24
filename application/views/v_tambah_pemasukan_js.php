@@ -23,7 +23,7 @@
                     var tgl_pemasukan = $('#tgl_pemasukan').val();
                     $.ajax({
                         type: "POST",
-                        url: '<?php echo base_url('api/proses_tambah_pemasukan')?>',
+                        url: '<?php echo base_url('api/api/proses_tambah_pemasukan')?>',
                                                 
                         data:{
                             keterangan :keterangan ,

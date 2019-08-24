@@ -113,6 +113,30 @@ Class Admin extends MY_Controller{
 		$this->load->view('v_endbar');
 	}
 
+	public function data_tagihan_now(){
+		$month=date('m');
+		if ($month == '01'){$bulan ='januari';}
+		else if($month =='02'){$bulan='februari';}
+		else if($month =='03'){$bulan='maret';}
+		else if($month =='04'){$bulan='april';}
+		else if($month =='05'){$bulan='mei';}
+		else if($month =='06'){$bulan='juni';}
+		else if($month =='07'){$bulan='juli';}
+		else if($month =='08'){$bulan='agustus';}
+		else if($month =='09'){$bulan='september';}
+		else if($month =='10'){$bulan='oktober';}
+		else if($month =='11'){$bulan='november';}
+		else {$bulan='desember';}
+		$data['data']=$this->m_admin->get_tagihan_now($bulan)->result();
+
+		$this->load->view('v_topbar');
+		$this->load->view('v_data_tagihan_now',$data); 
+		$this->load->view('v_javascript');
+		$this->load->view('v_data_tagihan_js');
+		$this->load->view('v_endbar');
+
+	}
+
 	public function pemasukan(){
 		$data['data']=$this->m_admin->get_pemasukan()->result();
 

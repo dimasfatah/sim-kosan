@@ -25,6 +25,16 @@ public function get_tagihan(){
         //$this->db->where('tb_tagihan.id_kamar = tb_kamar.id_kamar')
         return $this->db->get();
 	}
+
+public function get_tagihan_now($bulan){
+		$this->db->select('tb_tagihan.*,tb_kamar.no_kamar,tb_kamar.Lantai');
+		$this->db->join('tb_kamar','tb_kamar.id_kamar = tb_tagihan.id_kamar');
+        $this->db->from('tb_tagihan','tb_kamar');
+		$this->db->where('tb_tagihan.status',$bulan);
+		$this->db->order_by('tb_tagihan.Batas',"asc");
+        return $this->db->get();
+	}
+
 public function get_pemasukan(){
 		$this->db->select('tb_pemasukan.*');
 		$this->db->from('tb_pemasukan');
@@ -57,7 +67,15 @@ public function get_tagihan_by_id($id){
         $this->db->from('tb_tagihan');
         $query = $this->db->get();
         return $query->row();
-	}	
+	}
+	
+public function get_no_hp_by_id($id){
+	$this->db->select('tb_penghuni.no_telp,tb_penghuni.nama_depan');
+	$this->db->where('id_kamar',$id);
+	$this->db->from('tb_penghuni');
+	$query=$this->db->get();
+	return $query->row();
+}	
 public function get_kamar_by_id($id){
 		$this->db->select('tb_kamar.*');
         

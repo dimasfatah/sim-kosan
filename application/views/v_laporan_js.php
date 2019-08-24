@@ -52,7 +52,7 @@
                     var format=$('#format').val();
                     $.ajax({
                         type: "POST",
-                        url: '<?php echo base_url('api/pdf_laporan')?>',
+                        url: '<?php echo base_url('api/api/pdf_laporan')?>',
                                                 
                         data:{
                             bulan :bulan ,

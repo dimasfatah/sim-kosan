@@ -54,7 +54,13 @@ class Api extends CI_Controller{
        $id=$this->input->get('id');
        $data=$this->m_admin->get_tagihan_by_id($id);
        echo json_encode($data);
-   } 
+   }
+
+   public function lihat_no_hp(){
+        $id_kamar=$this->input->get('id');
+        $data=$this->m_admin->get_no_hp_by_id($id_kamar);
+        echo json_encode($data);
+    } 
     
     public function lihat_kamar(){
         $id=$this->input->get('id');
@@ -168,6 +174,8 @@ class Api extends CI_Controller{
        );
        $this->db->insert('tb_kamar',$data);
     }
+    
+
     public function tambah_tagihan(){
         $no=$this->input->post('no_kamar');
         $lantai=$this->input->post('lantai');

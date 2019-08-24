@@ -9,7 +9,8 @@
                         <div class="row">
                              <div class="col-12">
                                 <div class="page-title-box">
-                                    <h4 class="page-title float-left">Data Kosan</h4>
+                                <a href="<?php echo base_url('admin/admin/data_tagihan') ?>"><button type="button"  class="btn btn-warning waves-effect">Tagihan Keseluruhan</button></a>
+                                <a href="<?php echo base_url('admin/admin/data_tagihan_now') ?>"><button type="button"  class="btn btn-secondary waves-effect">Tagihan Bulan ini</button></a>
 
                                         
 

@@ -15,7 +15,7 @@ function checkPasswordMatch() {
         $("#divCheckPasswordMatch").html("Passwords cocok.");
 }
 function gantipw(){
-    var url="<?php echo base_url('api/proses_ganti_password')?>";
+    var url="<?php echo base_url('api/api/proses_ganti_password')?>";
     var form="#form_ganti_password";
 
     $.ajax({

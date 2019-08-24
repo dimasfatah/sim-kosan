@@ -6,7 +6,7 @@
             $('select[name="lantai"]').on('change', function(){
                 $.ajax({
                     type : 'POST', 
-                    url  : '<?php echo base_url('api/nokamar_terisi'); ?>', 
+                    url  : '<?php echo base_url('api/api/nokamar_terisi'); ?>', 
                     data : {
                         lantai: $(this).val()
                     }, 
@@ -31,7 +31,7 @@
                     var tanggal_pembayaran=$('#tgl').val();
                     $.ajax({
                         type: "POST",
-                        url: '<?php echo base_url('api/proses_tambah_pembayaran')?>',
+                        url: '<?php echo base_url('api/api/proses_tambah_pembayaran')?>',
                                                 
                         data:{
                             lantai :lantai ,

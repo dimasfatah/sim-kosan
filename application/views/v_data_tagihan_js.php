@@ -2,7 +2,7 @@
             $('select[name="lantai"]').on('change', function(){
                 $.ajax({
                     type : 'POST', 
-                    url  : '<?php echo base_url('api/nokamar_kosong'); ?>',
+                    url  : '<?php echo base_url('api/api/nokamar_kosong'); ?>',
                     data : {
                         lantai: $(this).val()
                     }, 
@@ -53,6 +53,11 @@
         function edit(){
             save_method="edit";
         }
+        function ingatkan(){
+            var id= $(this).attr("data");
+            console.log(id);
+            //window.open ('https://www.facebook.com', "_newtab" );
+        }
             $(document).ready(function(){
 
                 var filtering = $('#datatable');
@@ -79,7 +84,7 @@
                         var id= $(this).attr("data");
                         $.ajax({
                             type : "GET",
-                            url  : "<?php echo base_url('api/lihat_tagihan')?>",
+                            url  : "<?php echo base_url('api/api/lihat_tagihan')?>",
                             dataType : "JSON" ,
                             data : {id:id},
                             success: function(data){
@@ -93,6 +98,25 @@
                         });
                         return false;
                     });
+
+                $('button.ingatkan').click(function() {
+                        var no_hp;var alamat;
+                        var id= $(this).attr("data");
+                        $.ajax({
+                            type : "GET",
+                            url  : "<?php echo base_url('api/api/lihat_no_hp')?>",
+                            dataType : "JSON" ,
+                            data : {id:id},
+                            success: function(data){
+                                no_hp=data.no_telp;
+                                alamat="https://api.whatsapp.com/send?phone="+no_hp+"&text=Assalamualaikum%20mas%20"+data.nama_depan+"%0Amohon%20untuk%20segera%20bayar%20kos%20karena%20sudah%20lewat%20dari%20tanggal%20pembayaran";
+                                window.open (alamat, "_newtab" );    
+                                    
+                                
+                            }
+                        });
+                        return false;
+                    });    
             })
 
             function simpan(){
@@ -100,13 +124,13 @@
                 
                 
                 if(save_method == 'tambah') {
-                    url = "<?php echo base_url('api/tambah_tagihan')?>";
+                    url = "<?php echo base_url('api/api/tambah_tagihan')?>";
                     form = '#form_tambah_tagihan';
                     modal='#modaltambahtagihan';
                     sukses="Berhasil menambahkan tagihan";
                     gagal="gagal menambahkan tagihan";
                 } else {
-                    url = "<?php echo base_url('api/update_tagihan')?>";
+                    url = "<?php echo base_url('api/api/update_tagihan')?>";
                     form = '#form_edit_tagihan';
                     modal='#modaledit_tagihan';
                     sukses="Berhasil edit tagihan";

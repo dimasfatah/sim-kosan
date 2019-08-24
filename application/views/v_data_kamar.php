@@ -50,6 +50,7 @@
                                     <h4 class="m-t-0 header-title"><b>Data Kamar</b></h4>
                                     <button type="button" data-toggle="modal" data-target="#modaltambahkamar" class="btn btn-custom  waves-effect w-md"> Tambah </button>
                                     <br>
+                                    <br>
                                     <table id="datatable" data-page-size="7" class="table table-bordered">
                                         <thead>
                                         <tr>

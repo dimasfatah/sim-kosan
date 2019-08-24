@@ -27,7 +27,7 @@
                                         <div class="col-sm-12">
                                             <br>
 
-                                            <?php echo form_open('admin/admin/pdf_laporan',array('id'=>'form_cetak_laporan','class'=>'form-inline')); ?>
+                                            <?php echo form_open('api/pdf_laporan',array('id'=>'form_cetak_laporan','class'=>'form-inline')); ?>
                                                 <div class="form-group">
                                                     <label class="sr-only" for="exampleInputEmail21">Bulan</label>
                                                     <select id="bulan" name="bulan" class="form-control input-sm" required>
