@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 28, 2018 at 02:08 PM
+-- Generation Time: Aug 24, 2019 at 01:06 PM
 -- Server version: 10.1.29-MariaDB
 -- PHP Version: 7.2.0
 
@@ -21,8 +21,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `simkosan`
 --
-CREATE DATABASE IF NOT EXISTS `simkosan` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `simkosan`;
 
 -- --------------------------------------------------------
 
@@ -42,6 +40,38 @@ CREATE TABLE `detail_transaksi` (
 ,`tanggal_kredit` date
 ,`tanggal_pemasukan` date
 );
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `migrations`
+--
+
+CREATE TABLE `migrations` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `migration` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `migrations`
+--
+
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
+(1, '2014_10_12_000000_create_users_table', 1),
+(2, '2014_10_12_100000_create_password_resets_table', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `password_resets`
+--
+
+CREATE TABLE `password_resets` (
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -68,7 +98,7 @@ INSERT INTO `tb_kamar` (`id_kamar`, `no_kamar`, `lantai`, `kamar_mandi`, `luas_k
 (3, 1, 'harom', 'luar', 9, 'Kosong'),
 (4, 2, 'aqso', 'luar', 9, 'Kosong'),
 (5, 2, 'nabawi', 'luar', 9, 'Kosong'),
-(6, 2, 'harom', 'dalam', 12, 'Kosong'),
+(6, 2, 'harom', 'dalam', 12, 'Terisi'),
 (7, 4, 'aqso', 'dalam', 9, 'Kosong'),
 (8, 5, 'aqso', 'dalam', 9, 'Kosong');
 
@@ -160,7 +190,9 @@ CREATE TABLE `tb_pembayaran` (
 --
 
 INSERT INTO `tb_pembayaran` (`id_pembayaran`, `id_tagihan`, `keterangan`, `bulan`, `tgl_pembayaran`, `total_pembayaran`) VALUES
-(8, 1, 'Pembayaran kos aqso No 1 bulan januari - april', 4, '2018-01-08', '1800000.00');
+(8, 1, 'Pembayaran kos aqso No 1 bulan januari - april', 4, '2018-01-08', '1800000.00'),
+(9, 2, 'Pembayaran kos harom No 2 bulan juli - agustus', 1, '2019-08-24', '450000.00'),
+(10, 2, 'Pembayaran kos harom No 2 bulan juli - agustus', 1, '2019-08-23', '450000.00');
 
 --
 -- Triggers `tb_pembayaran`
@@ -196,7 +228,8 @@ CREATE TABLE `tb_penghuni` (
 
 INSERT INTO `tb_penghuni` (`id_penghuni`, `id_kamar`, `nama_depan`, `nama_belakang`, `no_ktp`, `plat_nomor`, `alamat`, `no_telp`, `tempat_lahir`, `tanggal_lahir`) VALUES
 (1, 8, 'Dimas', 'Fatahhilla', '3224934903023', 'P4288ZW', 'Pesanggaran', '085335472057', 'Banyuwangi', '1997-07-12'),
-(2, 7, 'Anggara', 'Dwi', '3224934903023', 'P4288ZW', 'Bondowoso', '085335472898', 'Bondowoso', '1998-12-11');
+(2, 7, 'Angga', 'Dwi', '3224934903023', 'P4288ZW', 'Bondowoso', '085335472898', 'Bondowoso', '1998-12-11'),
+(3, 8, 'Bahrullah', 'Asturi', '3224934903023', 'P4288ZW', 'Banyuwangi', '6282335986334', 'Banyuwangi', '2019-08-06');
 
 -- --------------------------------------------------------
 
@@ -217,7 +250,8 @@ CREATE TABLE `tb_tagihan` (
 --
 
 INSERT INTO `tb_tagihan` (`id_tagihan`, `id_kamar`, `jumlah_tagihan`, `Batas`, `status`) VALUES
-(1, 1, '450000.00', 8, 'april');
+(1, 1, '450000.00', 8, 'april'),
+(2, 6, '450000.00', 24, 'agustus');
 
 -- --------------------------------------------------------
 
@@ -242,7 +276,9 @@ INSERT INTO `tb_transaksi` (`id_transaksi`, `id_kredit`, `id_pemasukan`, `id_pem
 (8, NULL, 1, NULL),
 (9, NULL, 2, NULL),
 (10, NULL, 3, NULL),
-(15, NULL, NULL, 8);
+(15, NULL, NULL, 8),
+(16, NULL, NULL, 9),
+(17, NULL, NULL, 10);
 
 -- --------------------------------------------------------
 
@@ -262,8 +298,31 @@ CREATE TABLE `tb_user` (
 --
 
 INSERT INTO `tb_user` (`id_user`, `username`, `password`, `level`) VALUES
-(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'admin'),
-(2, 'superadmin', '17c4520f6cfd1ab53d8745e84681eb49', 'superadmin');
+(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'admin');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'Dimas Fatahhilla', 'dimasfatah2@gmail.com', NULL, '$2y$10$OlRFd4Zf33FHIjsE1wcl3.PVqWqi3OAQPlDyU37DLiGhEN3y0tBKe', NULL, '2019-03-13 01:10:54', '2019-03-13 01:10:54');
 
 -- --------------------------------------------------------
 
@@ -277,6 +336,18 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `migrations`
+--
+ALTER TABLE `migrations`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `password_resets`
+--
+ALTER TABLE `password_resets`
+  ADD KEY `password_resets_email_index` (`email`);
 
 --
 -- Indexes for table `tb_kamar`
@@ -334,8 +405,21 @@ ALTER TABLE `tb_user`
   ADD UNIQUE KEY `username` (`username`);
 
 --
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `users_email_unique` (`email`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `migrations`
+--
+ALTER TABLE `migrations`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tb_kamar`
@@ -359,31 +443,37 @@ ALTER TABLE `tb_pemasukan`
 -- AUTO_INCREMENT for table `tb_pembayaran`
 --
 ALTER TABLE `tb_pembayaran`
-  MODIFY `id_pembayaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_pembayaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `tb_penghuni`
 --
 ALTER TABLE `tb_penghuni`
-  MODIFY `id_penghuni` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_penghuni` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tb_tagihan`
 --
 ALTER TABLE `tb_tagihan`
-  MODIFY `id_tagihan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_tagihan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tb_transaksi`
 --
 ALTER TABLE `tb_transaksi`
-  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `tb_user`
 --
 ALTER TABLE `tb_user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
